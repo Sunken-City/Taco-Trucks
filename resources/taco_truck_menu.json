@@ -1,0 +1,65 @@
+{
+    "menu": {
+        "type" : [
+            { "name" : "Steak", "price" : 1.00},
+            { "name" : "Chicken", "price" : 0.75},
+            { "name" : "Carnitas", "price" : 1.00},
+            { "name" : "Veggie", "price" : 0.50},
+        ],
+        "tortillas": [
+            { "name" : "Flour", "price" : 0.25 },
+            { "name" : "Cayenne", "price" : 0.35 },
+            { "name" : "Wheat", "price" : 0.35 },
+            { "name" : "Spinach", "price" : 0.30 }
+        ],
+        "rice": [
+            { "name" : "Cilantro Rice", "price" : 0.25 },
+            { "name" : "Spanish Rice", "price" : 0.25 },
+        ],
+        "cheese": [
+            { "name" : "Queso Fresco", "price" : 0.50 },
+            { "name" : "Cheddar/Jack Mix", "price" : 0.35 },
+            { "name" : "Monterrey Jack", "price" : 0.35 },
+        ],
+        "beans": [
+            { "name" : "Refried Beans", "price" : 0.35 },
+            { "name" : "Whole Pinto Beans", "price" : 0.25 },
+            { "name" : "Black Beans", "price" : 0.10 },
+        ],
+        "sauces": [
+            { "name" : "Hot Tomatillo", "heatRating" : 3, "price" : 0},
+            { "name" : "Death", "heatRating" : 4, "price" : 0},
+            { "name" : "Fresh Lime Juice", "heatRating" : 1, "price" : 0},
+            { "name" : "Bad Ass BBQ", "heatRating" : 2, "price" : 0},
+            { "name" : "Mild Tomatillo", "heatRating" : 2, "price" : 0},
+            { "name" : "Ranch", "heatRating" : 1, "price" : 0},
+            { "name" : "No Sauce", "heatRating" : 0, "price" : 0},
+            { "name" : "Habenero", "heatRating" : 3, "price" : 0},
+            { "name" : "Salsa", "heatRating" : 2, "price" : 0},
+            { "name" : "Ancho", "heatRating" : 1, "price" : 0},
+            { "name" : "Tomatillo", "heatRating" : 1, "price" : 0},
+            { "name" : "Herb Vinigrette", "heatRating" : 1, "price" : 0}
+        ],
+        "vegetables": [
+            { "name" : "Poblano Salsa", "price" : 0 },
+            { "name" : "Roasted Garlic", "price" : 0 },
+            { "name" : "Peppers/Onions", "price" : 0 },
+            { "name" : "Red Onion", "price" : 0 },
+            { "name" : "Jalapenos", "price" : 0 },
+            { "name" : "Pico de Gallo", "price" : 0 },
+            { "name" : "White Onion", "price" : 0 },
+            { "name" : "Tomatoes", "price" : 0 },
+            { "name" : "Cilantro", "price" : 0 },
+            { "name" : "Tortilla Strips", "price" : 0 },
+            { "name" : "Lettuce", "price" : 0 }
+        ],
+        "extras": [
+            { "name" : "X - Extra Meat/Veggies", "price" : 1.00 },
+            { "name" : "Sour Cream", "price" : 0.75 },
+            { "name" : "Guacamole", "price" : 0.75 },
+            { "name" : "Queso", "price" : 0.50 },
+            { "name" : "Sliced Avocado", "price" : 0.75 },
+            { "name" : "Bacon", "price" : 0.50 }
+        ]
+    }
+}
