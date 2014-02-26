@@ -1,0 +1,48 @@
+body
+{
+  background-image: url('../../resources/backgrounds/squared_metal.png');
+  font-family: 'Alegreya Sans', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+  font-family: 'Hammersmith One', sans-serif;
+  text-shadow: 2px 2px #000;
+}
+
+#title
+{
+  font-size: 8em; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 7em;
+  text-shadow: 3px 3px #000;
+  color: #00A480;
+  padding: 40px;
+  background-image: url('../../resources/backgrounds/blackorchid.png');
+}
+
+#createATaco
+{
+  position: relative;
+  background-image: url('../../resources/backgrounds/blackorchid.png');
+  width: 50%;
+  border-style: solid;
+  border-color: #333;
+  border-radius: 50px 5px;
+}
+
+#createATaco:hover
+{
+  opacity: 0.9
+}
+
+.buttonText
+{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 7em;
+  font-size: 4em;
+  color: #FF6000;  
+}
