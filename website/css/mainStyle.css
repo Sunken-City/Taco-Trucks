@@ -19,7 +19,19 @@ h1,h2,h3,h4,h5,h6
   text-shadow: 3px 3px #000;
   color: #00A480;
   padding: 40px;
-  background-image: url('../../resources/backgrounds/blackorchid.png');
+  //background-image: url('../../resources/backgrounds/blackorchid.png');
+}
+
+img
+{
+  padding:8px;
+}
+
+img:hover
+{
+  border-style: ridge;
+  border-width: 8px;
+  padding: 0px;
 }
 
 #createATaco
@@ -30,6 +42,8 @@ h1,h2,h3,h4,h5,h6
   border-style: solid;
   border-color: #333;
   border-radius: 50px 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #createATaco:hover
