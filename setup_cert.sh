@@ -123,6 +123,9 @@ Note, that this script has created a self-signed certificate. MOST web browsers
 will not accept this certificate as a 'trusted' certificate. The purpose of this
 script is to create 'test' certificate to use in development.
 In order to make this certificate trusted for local development,
-look up the instructions for your specific machine (as they differ greatly).\n"
+look up the instructions for your specific machine (as they differ greatly).
+Here's a good link for help:
+http://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate\n"
+
 
 exit 0
