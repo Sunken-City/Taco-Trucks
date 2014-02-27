@@ -15,7 +15,7 @@ h1,h2,h3,h4,h5,h6
   font-size: 8em; 
   margin-left: auto;
   margin-right: auto;
-  width: 7em;
+  width: 50%;
   text-shadow: 3px 3px #000;
   color: #00A480;
   padding: 40px;
@@ -59,4 +59,5 @@ img:hover
   width: 7em;
   font-size: 4em;
   color: #FF6000;  
+
 }
