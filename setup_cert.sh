@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# Will Spurgin
+# Made 2/25/2014
+
 ROOT_UID=0     # Only users with $UID 0 have root privileges.
 E_XCD=86       # Can't change directory
 E_NOTROOT=87   # Non-root exit error.
+EACCES=13      # Permission denied
 name="server"
 
+echo
+
+# Check os, this will determine the default path to ssl
 if [[ $OSTYPE == darwin* ]]; then
     DIR="/etc/apache2/ssl/localcerts"
 elif [[ $OSTYPE == linux-gnu ]]; then
@@ -12,14 +19,10 @@ elif [[ $OSTYPE == linux-gnu ]]; then
 else
     echo -e "You're OS is not supported by this script, you will have to manually
     move the certificate and key to the proper location for ssl"
+    DIR="."
 fi
 
-
-if [[ "$UID" -ne "$ROOT_UID" ]]; then
-    echo -e "Must run this script as root. Try adding 'sudo'."
-    exit $E_NOTROOT
-fi
-
+#Check the option flags
 while getopts ":hn:d:" VALUE "$@" ; do
 
     if [[ "$VALUE" == "h" ]]; then
@@ -75,12 +78,14 @@ while getopts ":hn:d:" VALUE "$@" ; do
     fi
 done
 
+# after processing flags, verify that the user knows what they're doing
+
 echo -e "This script will create a private key named '$name.key'
 and self-signed certificate named '$name.crt'. and move them into
 '$DIR' [WARNING] If the directories do not exist, they WILL be made!"
 read -p "Do you want to continue? [Y/n]" -n1 -s goOn
 
-echo \n
+echo
 
 if [[ $goOn != 'Y' ]]; then
     echo -e "Exiting now. No key or certificate will be created."
@@ -89,8 +94,9 @@ fi
 
 if [[ ! -d "$DIR" ]]; then
     mkdir -p $DIR || {
-        echo "Could not make directories $DIR"
-        exit 1
+        echo "Could not make directories $DIR
+        Might need to run this script as root to have proper permissions. Try adding 'sudo'."
+        exit $EACCES
     }
 fi
 
@@ -109,5 +115,14 @@ openssl req -new -x509 -days 365 -nodes -out $name.crt -keyout $name.key || {
 cp $name.key $name.key.orig
 
 openssl rsa -in $name.key.orig -out $name.key
+
+
+# Kindly enlighten the user.
+echo -e "\nYour certificate and key have been created and moved into $DIR
+Note, that this script has created a self-signed certificate. MOST web browsers
+will not accept this certificate as a 'trusted' certificate. The purpose of this
+script is to create 'test' certificate to use in development.
+In order to make this certificate trusted for local development,
+look up the instructions for your specific machine (as they differ greatly).\n"
 
 exit 0
