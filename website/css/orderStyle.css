@@ -1,0 +1,38 @@
+body
+{
+    background-image: url('../resources/img/pintoBeans.jpg');
+}
+
+
+#quantity
+{
+    width: 5%;
+}
+
+#accordion
+{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#information
+{
+    background-color: cyan;
+}
+
+#cart
+{
+    background-color: green;
+}
+
+.caption
+{
+    float:left;
+}
+
+.ingredient
+{
+    position: relative;
+    float:left;
+}

@@ -1,48 +1,72 @@
 <!DOCTYPE html>
-<!--Assignment 1 Comment-->
 <!--Created by: Anthony Cloudy-->
 <!--35103644-->
 <html lang="en">
 
-<head>
-  <title>The Taco Truck</title>
-  <meta charset="UTF-8">
-   
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-  
-  <script src="js/order.js"></script>
-  <!--<link rel="stylesheet" type="text/css" href="css/style.css"/>
-  <link href='http://fonts.googleapis.com/css?family=Jockey+One|Istok+Web' rel='stylesheet' type='text/css'>-->
-</head>
+  <head>
+    <title>The Taco Truck</title>
+    <meta charset="UTF-8">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans|Hammersmith+One' rel='stylesheet' type='text/css'>
+    
+    <script src="js/order.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/orderStyle.css"/>
+    <!--<link href='http://fonts.googleapis.com/css?family=Jockey+One|Istok+Web' rel='stylesheet' type='text/css'>-->
+  </head>
 
-<body>
-  <h1>Create A Taco</h1>
-  <div class="button" id="login">Login</div>
-  
-  <div id="accordion">
-    <h3>Step 1: Choose your Tortilla</h3>
-    <div>First content panel</div>
-    <h3>Step 2: Choose your Filling</h3>
-    <div>Second content panel</div>
-    <h3>Step 3: Choose your Rice</h3>
-    <div>Second content panel</div>
-    <h3>Step 4: Choose your Beans</h3>
-    <div>Second content panel</div>
-    <h3>Step 5: Choose your Sauce</h3>
-    <div>Second content panel</div>
-    <h3>Step 6: Choose your Veggies</h3>
-    <div>Second content panel</div>
-    <h3>Step 7: Choose your Extras</h3>
-    <div>Second content panel</div>
-  </div>
-  
-  <div id="information"> 
-    <label for="time">Quantity</label>
-    <input name="time" id="time" />
-  </div>
-  <div id="cart"> </div>
-</body>
+  <body>
+    <h1>Create A Taco</h1>
+    
+    <div id="background"></div>
+    
+    <div class="button" id="login">Login</div>
+    
+    <div id="accordion">
+      <h3>Step 1: Choose your Tortilla</h3>
+      <div>
+	<div class="tortilla ingredient">
+	  <img src="resources/img/pintoBeans.jpg" alt="pinto beans">
+	  <span class="caption">Pinto Beans</span>
+	</div>
+	<div class="tortilla ingredient">
+	  <img src="resources/img/pintoBeans.jpg" alt="pinto beans">
+	  <span class="caption">Pinto Beans</span>
+	</div>
+	<div class="tortilla ingredient">
+	  <img src="resources/img/pintoBeans.jpg" alt="pinto beans">
+	  <span class="caption">Pinto Beans</span>
+	</div>
+      </div>
+      <h3>Step 2: Choose your Filling</h3>
+      <div>Second content panel</div>
+      <h3>Step 3: Choose your Rice</h3>
+      <div>Second content panel</div>
+      <h3>Step 4: Choose your Beans</h3>
+      <div>Second content panel</div>
+      <h3>Step 5: Choose your Sauce</h3>
+      <div>Second content panel</div>
+      <h3>Step 6: Choose your Veggies</h3>
+      <div>Second content panel</div>
+      <h3>Step 7: Choose your Extras</h3>
+      <div>Second content panel</div>
+    </div>
+    
+    <div id="information"> 
+      <label for="quantity">Quantity</label>
+      <input name="quantity" class="quantity"/>
+      <span class="price">Price:$</span>
+      <div class="button" id="addToCart">Add to Cart</div>
+      <div class="button" id="checkout">Checkout</div>
+    </div>
+    
+    <div id="cart"> 
+    <span id="total">Total:</span>
+    </div>
+  </body>
 
 </html>
