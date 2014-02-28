@@ -41,13 +41,13 @@ CREATE TABLE IF NOT EXISTS `fixinClass` (
 --
 
 INSERT INTO `fixinClass` (`fixin_classId`, `class`) VALUES
-(1, 'type\r'),
-(2, 'tortillas\r'),
-(3, 'rice\r'),
-(4, 'cheese\r'),
-(5, 'beans\r'),
-(6, 'sauces\r'),
-(7, 'vegetables\r'),
+(1, 'type'),
+(2, 'tortillas'),
+(3, 'rice'),
+(4, 'cheese'),
+(5, 'beans'),
+(6, 'sauces'),
+(7, 'vegetables'),
 (8, 'extras');
 
 -- --------------------------------------------------------
