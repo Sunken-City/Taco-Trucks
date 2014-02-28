@@ -9,6 +9,43 @@
     <h1 id="title">The Taco Truck</h1>
     <img src="../resources/img/taco_truck_logo.png" alt="Company Logo" id="logo">
     
+    <div id = "createAccountDiv">
+      <h2 class ="createAnAccount">Create Account</h2>
+      <form id="createAccount" action = "createUserLogin.php" method = "post">
+        <ul>
+        <li>
+            <input type="text" placeholder="First Name" id="firstName" name = "firstName"required/>
+            <input type="text" placeholder="Last Name" id="lastName" name = "lastName"required/>
+        </li>
+
+        <li>
+            <input type="email" placeholder="Email" id="email" name = "email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" required/>
+        </li>
+
+        <li>
+            <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}" required/>
+        </li>
+          </ul>
+           <input type="submit" value="Sign Up" id="signUp" />
+      </form>
+    </div>
+
+    <div id = "loginDiv">
+      <h2 class ="login">Login</h2>
+      <form id="login" action = "validateLogin.php" method = "post">
+        <ul>
+        <li>
+            <input type="email" placeholder="Email" id="email" name = "email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" required/>
+        </li>
+
+        <li>
+            <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}" required/>
+        </li>
+          </ul>
+           <input type="submit" value="Sign Up" id="signUp" />
+      </form>
+    </div>
+
     <div id="createATaco">
       <h2 class="buttonText">Create a Taco</h2>
     </div>

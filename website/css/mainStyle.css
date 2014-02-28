@@ -69,3 +69,17 @@ img:hover
   margin-top: -160px;
   margin-bottom: 9%;
 }
+
+#loginDiv
+{
+  position: absolute;
+  margin-left: 80%;
+  margin-right: auto;
+}
+
+#createAccountDiv
+{
+  position: absolute;
+  margin-right: 80%;
+  margin-left: 80%;
+}
