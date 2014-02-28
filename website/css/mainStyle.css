@@ -1,6 +1,6 @@
 body
 {
-  background-image: url('../../resources/backgrounds/squared_metal.png');
+  background-image: url('../resources/backgrounds/squared_metal.png');
   font-family: 'Alegreya Sans', sans-serif;
 }
 
@@ -19,7 +19,7 @@ h1,h2,h3,h4,h5,h6
   text-shadow: 3px 3px #000;
   color: #00A480;
   padding: 40px;
-  //background-image: url('../../resources/backgrounds/blackorchid.png');
+  //background-image: url('../resources/backgrounds/blackorchid.png');
 }
 
 img
@@ -37,13 +37,14 @@ img:hover
 #createATaco
 {
   position: relative;
-  background-image: url('../../resources/backgrounds/blackorchid.png');
-  width: 50%;
+  background-image: url('../resources/backgrounds/blackorchid.png');
+  width: 33%;
   border-style: solid;
   border-color: #333;
   border-radius: 50px 5px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: -7%;
 }
 
 #createATaco:hover
@@ -75,11 +76,39 @@ img:hover
   position: absolute;
   margin-left: 80%;
   margin-right: auto;
+  margin-top: -10%;
 }
-
 #createAccountDiv
 {
-  position: absolute;
-  margin-right: 80%;
-  margin-left: 80%;
+  margin-top: -10%;
+  margin-left: 5%;
+  margin-right:auto;;
+}
+
+li
+{
+  padding: 4px;
+}
+input
+{
+  font-size: 20px;
+  width: 200px;
+  height: 30px;
+}
+.createAnAccount
+{
+  margin-left: 8%;
+}
+.login
+{
+  margin-left: 43%;
+}
+.submit
+{
+  height: 30px;
+  margin-left: 7%;
+}
+#signIn
+{
+  margin-left: 18%;
 }
