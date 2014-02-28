@@ -1,3 +1,8 @@
+body
+{
+    background-image: url('../resources/img/pintoBeans.jpg');
+}
+
 
 #quantity
 {
@@ -19,4 +24,15 @@
 #cart
 {
     background-color: green;
+}
+
+.caption
+{
+    float:left;
+}
+
+.ingredient
+{
+    position: relative;
+    float:left;
 }
