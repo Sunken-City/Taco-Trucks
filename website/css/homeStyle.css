@@ -46,6 +46,12 @@
   margin-bottom: 9%;
 }
 
+#logo:hover
+{
+  border-style: none;
+  padding: 8px;
+}
+
 #loginDiv
 {
   position: absolute;

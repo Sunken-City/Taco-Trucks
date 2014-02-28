@@ -1,9 +1,3 @@
-body
-{
-    background-image: url('../resources/img/pintoBeans.jpg');
-}
-
-
 #quantity
 {
     width: 5%;
@@ -29,6 +23,7 @@ body
 .caption
 {
     float:left;
+    padding-left: 8px;
 }
 
 .ingredient
