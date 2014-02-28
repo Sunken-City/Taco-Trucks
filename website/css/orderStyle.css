@@ -1,4 +1,3 @@
-
 #quantity
 {
     width: 5%;
@@ -19,4 +18,16 @@
 #cart
 {
     background-color: green;
+}
+
+.caption
+{
+    float:left;
+    padding-left: 8px;
+}
+
+.ingredient
+{
+    position: relative;
+    float:left;
 }

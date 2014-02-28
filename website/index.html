@@ -1,17 +1,19 @@
+<!doctype HTML>
 <html>
   <head>
     <title>The Taco Truck</title>
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="css/homeStyle.css">
     <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans|Hammersmith+One' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src = "js/main.js" ></script>
   </head>
   <body>
     <h1 id="title">The Taco Truck</h1>
-    <img src="../resources/img/taco_truck_logo.png" alt="Company Logo" id="logo">
+    <img src="resources/img/taco_truck_logo.png" alt="Company Logo" id="logo">
     
     <div id = "createAccountDiv">
       <h2 class ="createAnAccount">Create Account</h2>
-      <form id="createAccount" action = "createUserLogin.php" method = "post">
+      <form id="createAccount" action = "/api/user" method = "post">
         <ul>
         <li>
             <input type="text" placeholder="First Name" id="firstName" name = "firstName"required/>
@@ -26,13 +28,13 @@
             <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}" required/>
         </li>
           </ul>
-           <input type="submit" value="Sign Up" id="signUp" />
+           <input type="submit" value="Sign Up" id="signUp" class = "submit" />
       </form>
     </div>
 
     <div id = "loginDiv">
       <h2 class ="login">Login</h2>
-      <form id="login" action = "validateLogin.php" method = "post">
+      <form id="login" action = "/api/login" method = "post">
         <ul>
         <li>
             <input type="email" placeholder="Email" id="email" name = "email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" required/>
@@ -42,7 +44,7 @@
             <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}" required/>
         </li>
           </ul>
-           <input type="submit" value="Sign Up" id="signUp" />
+           <input type="submit" value="Sign In" id="signIn"class = "submit" />
       </form>
     </div>
 

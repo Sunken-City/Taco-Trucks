@@ -1,0 +1,151 @@
+
+#title
+{
+  font-size: 8em; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-shadow: 3px 3px #000;
+  color: #00A480;
+  padding: 40px;
+}
+
+#createATaco
+{
+  position: relative;
+  background-image: url('../resources/backgrounds/blackorchid.png');
+  width: 50%;
+  border-style: solid;
+  border-color: #333;
+  border-radius: 50px 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#createATaco:hover
+{
+  opacity: 0.9
+}
+
+.buttonText
+{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 7em;
+  font-size: 4em;
+  color: #FF6000;  
+
+}
+
+#logo
+{
+  margin-right: 40%;
+  margin-left: 37%;
+  margin-top: -160px;
+  margin-bottom: 9%;
+}
+
+#logo:hover
+{
+  border-style: none;
+  padding: 8px;
+}
+
+#loginDiv
+{
+  position: absolute;
+  margin-left: 80%;
+  margin-right: auto;
+}
+
+#createAccountDiv
+{
+  position: absolute;
+  margin-right: 80%;
+  margin-left: 80%;
+} 
+
+#createATaco
+{
+  position: relative;
+  background-image: url('../resources/backgrounds/blackorchid.png');
+  width: 33%;
+  border-style: solid;
+  border-color: #333;
+  border-radius: 50px 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -7%;
+}
+
+#createATaco:hover
+{
+  opacity: 0.9
+}
+
+.buttonText
+{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 7em;
+  font-size: 4em;
+  color: #FF6000;  
+
+}
+
+#logo
+{
+  margin-right: 40%;
+  margin-left: 37%;
+  margin-top: -160px;
+  margin-bottom: 9%;
+}
+
+#loginDiv
+{
+  position: absolute;
+  margin-left: 80%;
+  margin-right: auto;
+  margin-top: -10%;
+}
+#createAccountDiv
+{
+  margin-top: -10%;
+  margin-left: 5%;
+  margin-right:auto;;
+}
+
+li
+{
+  padding: 4px;
+}
+input
+{
+  font-size: 20px;
+  width: 200px;
+  height: 30px;
+}
+.createAnAccount
+{
+  margin-left: 35%;
+}
+.login
+{
+  margin-left: 43%;
+}
+.submit
+{
+  height: 30px;
+  margin-left: 7%;
+}
+#signIn
+{
+  margin-left: 18%;
+}
+
+#signUp
+{
+  margin-left: 30%;
+}
