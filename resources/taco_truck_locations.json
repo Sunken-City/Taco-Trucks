@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Klyde Warren Park",
+    "address": "2012 Woodall Rodgers Fwy",
+    "city": "Dallas",
+    "state": "TX",
+    "zipcode": 75201
+  },
+  {
+    "name": "Southern Methodist Unversity",
+    "address": "6425 Boaz Lane",
+    "city": "Dallas",
+    "state": "TX",
+    "zipcode": 75205
+  },
+  {
+    "name": "Addison Circle Park",
+    "address": "Addison Circle",
+    "city": "Addison",
+    "state": "TX",
+    "zipcode": 75001
+  },
+  {
+    "name": "Truck Yard",
+    "address": "5624 Sears St",
+    "city": "Dallas",
+    "state": "TX",
+    "zipcode": 75206
+  },
+  {
+    "name": "Deep Ellum",
+    "address": "2630 Commerce St",
+    "city": "Dallas",
+    "state": "TX",
+    "zipcode": 75226
+  }
+]
