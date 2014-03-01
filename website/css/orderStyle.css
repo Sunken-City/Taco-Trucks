@@ -23,6 +23,7 @@
 .caption
 {
     float:left;
+    clear:both;
     padding-left: 8px;
 }
 
@@ -30,4 +31,5 @@
 {
     position: relative;
     float:left;
+    margin-right:6%;
 }
