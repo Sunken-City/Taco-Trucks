@@ -23,6 +23,7 @@
 .caption
 {
     float:left;
+    clear:both;
     padding-left: 8px;
 }
 
@@ -30,4 +31,14 @@
 {
     position: relative;
     float:left;
+    margin-right:6%;
+    width: 150px;
+}
+
+.selected
+{
+  border-style: ridge;
+  border-width: 8px;
+  border-color: #99B02D !important;
+  padding: 0px;
 }
