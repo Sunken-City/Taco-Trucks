@@ -27,6 +27,15 @@ window.addEventListener('load', function(event) {
     for(var i = 0; i < json.menu.beans.length; i++){
       createMenu("bean", json.menu.beans[i].name);
     }
+    for(var i = 0; i < json.menu.sauces.length; i++){
+      createMenu("sauce", json.menu.sauces[i].name);
+    }
+    for(var i = 0; i < json.menu.vegetables.length; i++){
+      createMenu("veggie", json.menu.vegetables[i].name);
+    }
+    for(var i = 0; i < json.menu.extras.length; i++){
+      createMenu("extras", json.menu.extras[i].name);
+    }
   }
   else {
     console.log("HTTP request failed! Status Code: " + request.status);
