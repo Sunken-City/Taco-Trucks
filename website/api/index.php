@@ -2,6 +2,7 @@
 require '../../vendor/autoload.php';
 require_once('../../init.php');
 require_once('../../lib/password.php');
+require_once('../../lib/session.php');
 
 session_cache_limiter(false);
 getSession();
@@ -11,6 +12,7 @@ $app->log->setEnabled(true);
 
 $app->get('/menu', 'validate', 'getMenu');
 $app->post('/login', 'validate', 'authenticateUser');
+$app->get('/logout', 'destroySession');
 $app->get('/locations', 'validate', 'getLocations');
 $app->get('/', function() use ($app)
 {
@@ -142,53 +144,4 @@ function getConnection()
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     return $db;
-}
-
-function getSession()
-{
-    //if there is no active session
-    if(!isset($_SESSION))
-    {
-        if(isset($_COOKIE))
-        {
-            reset($_COOKIE);
-            $name = key($_COOKIE);
-        }
-        if(!isset($name))
-                $name = sha1("GUEST".time());
-        newSession($name);
-    }
-}
-
-// this function will destory any active sessions
-function newSession($name)
-{
-    if(isset($_SESSION))
-        destroySession();
-    session_name($name); // set session name
-    session_start(); // resume session
-}
-
-// Session must be active
-function destroySession()
-{
-    // destroying active session
-    session_unset();
-    if (ini_get("session.use_cookies"))
-    {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', 1,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]);
-    }
-    session_destroy();
-}
-
-function validate()
-{
-    if(!isset($_SESSION))
-    {
-        $app = \Slim\Slim::getInstance();
-        $app->halt(404);
-    }
 }
