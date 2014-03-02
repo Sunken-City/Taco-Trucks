@@ -15,12 +15,26 @@ $app->post('/login', 'authenticateUser');
 $app->get('/logout', 'destroySession');
 $app->get('/locations', 'getLocations');
 $app->post('/users', 'createUser');
+$app->get('/orders', 'getPreviousOrder');
 $app->get('/', function() use ($app)
 {
     $app->halt(404);
 });
 
 $app->run();
+
+function getPreviousOrder()
+{
+    $app = \Slim\Slim::getInstance();   
+    if(!validateSession('email'))
+        $app->halt(404);
+    else
+    {
+        $email = $_SESSION['email'];
+
+        // Justin's code here
+    }
+}
 
 function getLocations()
 {
@@ -30,6 +44,8 @@ function getLocations()
     try
     {
         $db = getConnection();
+        $stmt = $db->query($sql);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(PDOException $e)
     {
