@@ -2,7 +2,7 @@
 
 /*
 Will Spurgin
-Session handlers in friendly function
+Session handlers in friendly function form
 Made 2/28/2014
 */
 
@@ -44,13 +44,4 @@ function destroySession()
         $params["secure"], $params["httponly"]);
     }
     session_destroy();
-}
-
-function validate()
-{
-    if(!isset($_SESSION))
-    {
-        $app = \Slim\Slim::getInstance();
-        $app->halt(404);
-    }
 }

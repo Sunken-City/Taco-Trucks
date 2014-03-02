@@ -79,10 +79,10 @@ function authenticateUser()
             echo json_encode("[ { 'success': true } ]");
         }
         else //user has failed login
-        echo json_encode("[ { 'failure': true } ]");
+        echo json_encode("[ { 'success': false } ]");
     }
     else // if errors have occured
-        echo json_encode("[ { 'failure': true } ]");
+        echo json_encode("[ { 'success': false } ]");
 }
 
 function getMenu()
@@ -206,4 +206,13 @@ function createUser()
     }
 
     echo json_encode($response);
+}
+
+function validate()
+{
+    if(!isset($_SESSION))
+    {
+        $app = \Slim\Slim::getInstance();
+        $app->halt(404);
+    }
 }
