@@ -10,10 +10,10 @@ getSession();
 $app = new \Slim\Slim();
 $app->log->setEnabled(true);
 
-$app->get('/menu', 'validate', 'getMenu');
-$app->post('/login', 'validate', 'authenticateUser');
+$app->get('/menu', 'getMenu');
+$app->post('/login', 'authenticateUser');
 $app->get('/logout', 'destroySession');
-$app->get('/locations', 'validate', 'getLocations');
+$app->get('/locations', 'getLocations');
 $app->post('/users', 'createUser');
 $app->get('/', function() use ($app)
 {
@@ -206,13 +206,4 @@ function createUser()
     }
 
     echo json_encode($response);
-}
-
-function validate()
-{
-    if(!isset($_SESSION))
-    {
-        $app = \Slim\Slim::getInstance();
-        $app->halt(404);
-    }
 }

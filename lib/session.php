@@ -6,7 +6,7 @@ Session handlers in friendly function form
 Made 2/28/2014
 */
 
-function getSession()
+function getSession($set_guest=true)
 {
     //if there is no active session
     if(!isset($_SESSION))
@@ -16,9 +16,21 @@ function getSession()
             reset($_COOKIE);
             $name = key($_COOKIE);
         }
-        if(!isset($name))
-                $name = sha1("GUEST".time());
-        newSession($name);
+        if(!isset($name) && $set_guest)
+        {
+            $name = sha1("GUEST".time());
+            newSession($name);
+        }
+        else if (!isset($name))
+        {
+            //do not activate session
+            return false;
+        }
+        else
+        {
+            session_name($name); // set session name
+            session_start(); // resume session
+        }
     }
 }
 
@@ -28,7 +40,7 @@ function newSession($name)
     if(isset($_SESSION))
         destroySession();
     session_name($name); // set session name
-    session_start(); // resume session
+    session_start(); // start session
 }
 
 // Session must be active
@@ -44,4 +56,26 @@ function destroySession()
         $params["secure"], $params["httponly"]);
     }
     session_destroy();
+}
+
+// where $key and $value are the key and value pair to be checked in $_SESSION
+// If looking only for existence of $key, Usage validateSession($key);
+function validateSession($key, $value=NULL)
+{
+    $is_good = false;
+    if(isset($_SESSION))
+    {
+        if(isset($_SESSION[$key]))
+        {
+            if(!isset($value))
+                $is_good = true;
+            else
+            {
+                if($_SESSION[$key] == $value)
+                    $is_good = true;
+            }
+        }
+    }
+
+    return $is_good;
 }
