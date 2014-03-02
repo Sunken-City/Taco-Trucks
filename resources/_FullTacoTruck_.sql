@@ -382,17 +382,19 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `f_name`, `l_name`, `email`, `pass`, `telephoneNumber`, `cc_provider`, `cc_number`) VALUES
-(1, 'Bobby', 'Dickerson', 'BobbyDDickerson@armyspy.com', 'oom1duH0quei', '310-706-5713', 'Visa', '4581172250956295'),
-(2, 'John', 'Horan', 'JohnMHoran@cuvox.de', 'uM0zohG5', '802-906-9635', 'Visa', '4833554465137429'),
-(3, 'Lula', 'Benjamin', 'LulaTBenjamin@einrot.com', 'ohF0zooquu1', '641-740-3120', 'Visa', '4173199486453080'),
-(4, 'Franklin', 'Hills', 'FranklinIHills@rhyta.com', 'eeWahXo5ee', '402-647-8591', 'Visa', '4937182773835950'),
-(5, 'Samuel', 'Blevins', 'SamuelCBlevins@cuvox.de', 'TaeXo2OoV8u', '815-982-3812', 'American Express', '379823789416348'),
-(6, 'William', 'Raymond', 'WilliamRRaymond@cuvox.de', 'Jiech8aiCh', '732-432-0200', 'American Express', '345650978113056'),
-(7, 'Janice', 'Robertson', 'JaniceRRobertson@superrito.com', 'kohgae4OeGh', '479-214-4112', 'American Express', '375651072455574'),
-(8, 'Lashawn', 'Lambert', 'LashawnTLambert@einrot.com', 'Lu0icho2yee', '859-955-0616', 'American Express', '342691124360073'),
-(9, 'Vanessa', 'Seals', 'VanessaGSeals@dayrep.com', 'tooWee3Mo6ae', '417-629-4257', 'Mastercard', '5513462587501850'),
-(10, 'Bethany', 'Tong', 'BethanyETong@dayrep.com', 'ahC7Veigha', '937-260-7087', 'Mastercard', '5345523630534291');
+INSERT INTO `users` (`userId`, `f_name`, `l_name`, `email`, `pass`, `telephoneNumber`, `cc_provider`, `cc_number`)
+VALUES
+  (1, 'Bobby', 'Dickerson', 'BobbyDDickerson@armyspy.com', '$2y$10$awSaAymhABEP92Z4.b/yqOY2zocMp/ge1bR8oZz5aLvLjePQ8vWVa', '310-706-5713', 'Visa', '4581172250956295'),
+  (2, 'John', 'Horan', 'JohnMHoran@cuvox.de', '$2y$10$XHPiyMgIa/xNhSfPJUxmlu8eoZxzZakd80x5xMpTTLUlJjhteHrBS', '802-906-9635', 'Visa', '4833554465137429'),
+  (3, 'Lula', 'Benjamin', 'LulaTBenjamin@einrot.com', '$2y$10$BZ20.zRBPZp2sZp9NPsMVOvnozzoYNwtylTlav2zy83JL04Q3kbTq', '641-740-3120', 'Visa', '4173199486453080'),
+  (4, 'Franklin', 'Hills', 'FranklinIHills@rhyta.com', '$2y$10$AUGGX4YbUXCvMYGpGMKHQ.cWWvdgeFh5/wxFeGaxTFy5mcEooWUGe', '402-647-8591', 'Visa', '4937182773835950'),
+  (5, 'Samuel', 'Blevins', 'SamuelCBlevins@cuvox.de', '$2y$10$3KOjWpTi8I2MeSKeyXiIAOR3Di3b28n0X/A5Nje2gJg8wXR6yWzHC', '815-982-3812', 'American Express', '379823789416348'),
+  (6, 'William', 'Raymond', 'WilliamRRaymond@cuvox.de', '$2y$10$czyXLrRr/J06.Auv9zhdLOzWNJyALBrfc1RtAmnLQaUyNSdOhX09G', '732-432-0200', 'American Express', '345650978113056'),
+  (7, 'Janice', 'Robertson', 'JaniceRRobertson@superrito.com', '$2y$10$/G2Kbpc/XDXYf4.hdIT1JulKlgYswJDDCgVgyW9snHsGNc38oeoyi', '479-214-4112', 'American Express', '375651072455574'),
+  (8, 'Lashawn', 'Lambert', 'LashawnTLambert@einrot.com', '$2y$10$kKBf3VStnx09SCwyVs1/1uzAnx/6aEVjQIbXiyaiMCer0xEG8F7Vi', '859-955-0616', 'American Express', '342691124360073'),
+  (9, 'Vanessa', 'Seals', 'VanessaGSeals@dayrep.com', '$2y$10$a/dOIFPvNcSSYRtinF/lMOtrQlewHRP3QtC0DhUGEkQRZ0ye.6Nxi', '417-629-4257', 'Mastercard', '5513462587501850'),
+  (10, 'Bethany', 'Tong', 'BethanyETong@dayrep.com', '$2y$10$75j8cmP5hBo0h8wyyiY7de1nWDn9BLZL.5lKIfhg44juxyyfgNmi2', '937-260-7087', 'Mastercard', '5345523630534291');
+
 
 --
 -- Constraints for dumped tables

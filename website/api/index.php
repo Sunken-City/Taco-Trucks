@@ -14,6 +14,7 @@ $app->get('/menu', 'validate', 'getMenu');
 $app->post('/login', 'validate', 'authenticateUser');
 $app->get('/logout', 'destroySession');
 $app->get('/locations', 'validate', 'getLocations');
+$app->post('/users', 'createUser');
 $app->get('/', function() use ($app)
 {
     $app->halt(404);
@@ -144,4 +145,65 @@ function getConnection()
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     return $db;
+}
+
+function createUser()
+{
+    $app = \Slim\Slim::getInstance();
+    $sql = "INSERT INTO `users`(`f_name`, `l_name`, `email`, `pass`,
+        `telephoneNumber`, `cc_provider`, `cc_number`)
+    VALUES (:f_name, :l_name, :email, :pass, :tele, :cc_p, :cc_n)";
+    $sql_check = "SELECT COUNT(*) AS is_user FROM `users` WHERE `email`=:email";
+
+    $response = array();
+
+    try
+    {
+        $body = $app->request->getBody();
+        $user = json_decode($body);
+        $db = getConnection();
+        
+        // check if user email already exisits
+        $stmt = $db->prepare($sql_check);
+        $stmt->execute(array(':email' => $user->email));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // If an account is NOT found with that email
+        if($row['is_user'] == 0)
+        {
+            $stmt = $db->prepare($sql);
+            $params = array(
+                ':f_name' => $user->f_name,
+                ':l_name' => $user->l_name,
+                ':email' => $user->email,
+                ':pass' => password_hash($user->password, PASSWORD_DEFAULT),
+                ':tele' => $user->tele_num,
+                ':cc_p' => $user->cc_p,
+                ':cc_n' => $user->cc_n
+            );
+            $stmt->execute($params);
+            $response['success'] = true;
+            $response['message'] = "User created";
+            newSession(sha1(SALT.$user->email));
+        }
+        else
+        {
+            $response['success'] = false;
+            $response['message'] = "Duplicate email";
+        }
+    }
+    catch(PDOException $e)
+    {
+        $app->log->error($e->getMessage());
+        $response['success'] = false;
+        $response['message'] = "Errors occured.";
+    }
+    catch(Exception $e)
+    {
+        $app->log->error($e->getMessage());
+        $response['success'] = false;
+        $response['message'] = "Errors occured.";
+    }
+
+    echo json_encode($response);
 }
