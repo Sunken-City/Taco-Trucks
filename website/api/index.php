@@ -40,17 +40,22 @@ function getLocations()
 {
     $app = \Slim\Slim::getInstance();
     $sql = "SELECT * FROM truck_locations";
-
+    $response;
     try
     {
         $db = getConnection();
         $stmt = $db->query($sql);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $response['locations'] = $rows;
+        $response['success'] = true;
     }
     catch(PDOException $e)
     {
         $app->log->error($e->getMessage());
+        $response['success'] = false;
+        $response['message'] = "Errors occured";
     }
+    echo json_encode($response);
 }
 
 function authenticateUser()
