@@ -21,6 +21,12 @@
   <body>
     <h1>Create A Taco</h1>
     
+    <div id="cart">
+      <h3>Cart:</h3>
+      <div id="cartItems"></div>
+      <span id="total">Total:</span>
+    </div>
+    
     <div id="background"></div>
     
     <div class="button" id="login">Login</div>
@@ -45,6 +51,7 @@
     </div>
     
     <div id="information"> 
+      <div id="currentTaco"></div>
       <label for="quantity">Quantity</label>
       <input name="quantity" class="quantity"/>
       <span class="price">Price:$</span>
@@ -52,9 +59,8 @@
       <div class="button" id="checkout">Checkout</div>
     </div>
     
-    <div id="cart"> 
-    <span id="total">Total:</span>
-    </div>
+    
+    
   </body>
 
 </html>
