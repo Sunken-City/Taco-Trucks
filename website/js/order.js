@@ -65,12 +65,15 @@ var createMenu = function (type, name, price){
       //Deselect if selected
       if ($($this.children("img")[0]).hasClass("selected")){
 	$($this.children("img")[0]).removeClass("selected");
+	removeFromTaco(type, name, price);
       }
       else{
 	if ((type !== "veggie")&&(type !== "extras")){
 	  //Unselect any other selected values if the section is 1 or 0-1.
 	  if ($(".selected." + type)[0] !== undefined){
+	    var lastItemName = $(".selected." + type).attr('alt');
 	    $(".selected." + type).removeClass("selected");
+	    removeFromTaco(type, lastItemName, price);
 	  }
 	  //Move to next section.
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
@@ -79,12 +82,21 @@ var createMenu = function (type, name, price){
 	/*$('html, body').animate({
 	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).offset().top
       }, 400);*/
+	addToTaco(type, name, price);
       }
       
   });
   $("#" + type + "Menu").append(menuItem);
 };
 
+var addToTaco = function(type, name, price){
+  var fixing = $("<li>" + name + "</li>");
+  $(".fixing."+ type).append(fixing);
+};
+
+var removeFromTaco = function(type, name, price){
+  $("li").filter(":contains('"+ name + "')").remove();
+};
 
 
 

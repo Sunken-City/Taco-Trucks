@@ -30,6 +30,27 @@
   background-color: green;
 }
 
+#currentTaco
+{
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 10%;
+  background-color: red;
+}
+
+.fixing
+{
+  font-weight:bold;
+  list-style:none;
+}
+
+.fixing li
+{
+  font-weight:normal;
+  list-style: none;
+}
+
 .caption
 {
     float:left;
