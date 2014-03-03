@@ -60,15 +60,15 @@ var createMenu = function (type, name){
   menuItem.append("<span class=\"caption\">" + name + "</span>");
   menuItem.click(function(event){
       var $this = $(this);
-      
       //Deselect if selected
       if ($($this.children("img")[0]).hasClass("selected")){
 	$($this.children("img")[0]).removeClass("selected");
       }
-      else 
-      {
-	if ($(".selected." + type)[0] !== undefined){
-	  $(".selected." + type).removeClass("selected");
+      else{
+	if ((type !== "veggie")&&(type !== "extras")){
+	  if ($(".selected." + type)[0] !== undefined){
+	    $(".selected." + type).removeClass("selected");
+	  }
 	}
 	$($this.children("img")[0]).addClass("selected");
       }
