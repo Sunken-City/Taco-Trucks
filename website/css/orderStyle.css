@@ -6,11 +6,11 @@
 #accordion
 {
     width: 75%;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
 }
 
-#information
+/*#information
 {
     background-color: cyan;
     //bottom: 0;
@@ -29,13 +29,13 @@
   height: 100%;
   background-color: green;
 }
-
+*/
 #currentTaco
 {
   top: 0;
-  left: 0;
+  right: 0;
   position: fixed;
-  width: 10%;
+  width: 25%;
   background-color: red;
 }
 
@@ -84,4 +84,16 @@
   border-width: 8px;
   border-color: #99B02D !important;
   padding: 0px;
+}
+
+ul
+{
+  float: left;
+  width: 50%;
+  padding: 0;
+}
+
+li
+{
+  
 }
