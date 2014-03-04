@@ -54,6 +54,16 @@ window.addEventListener('load', function(event) {
       extras.init("extras", json.menu.extras[i].name, json.menu.extras[i].price);
       createMenu(extras);
     }
+    //Add the "None" option
+    var none = new Ingredient();
+    none.init("rice", "None", 0);
+    createMenu(none);
+    var none = new Ingredient();
+    none.init("bean", "None", 0);
+    createMenu(none);
+    var none = new Ingredient();
+    none.init("cheese", "None", 0);
+    createMenu(none);
   }
   else {
     console.log("HTTP request failed! Status Code: " + request.status);
@@ -116,16 +126,18 @@ function Taco() {
   this.init = function(){
   };
   
-  this.filling = "None";
-  this.tortilla = "None";
-  this.rice = "None";
-  this.bean = "None";
-  this.cheese = "None";
-  this.sauce = "None";
+  this.filling = "";
+  this.tortilla = "";
+  this.rice = "";
+  this.bean = "";
+  this.cheese = "";
+  this.sauce = "";
   this.veggie = [];
   this.extras = [];
   this.quantity = 0;
   this.price = 0;
+  
+  this.location = ".fixing"
   
   this.addToScreen = function(ingredient){
     this.add(ingredient);
@@ -144,12 +156,12 @@ function Taco() {
   
   this.print = function(ingredient){
     var fixing = $("<li>" + ingredient.name + "</li>");
-    $(".fixing."+ ingredient.type).append(fixing);
+    $(this.location + "."+ ingredient.type).append(fixing);
   };
   
   this.remove = function(ingredient){
     //Remove from the view.
-    $("li").filter(":contains('"+ ingredient.name + "')").remove();
+    $(this.location + " li").filter(":contains('"+ ingredient.name + "')").remove();
     if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
      this[ingredient.type] = "None";
     }
