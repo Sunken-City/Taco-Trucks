@@ -15,28 +15,44 @@ window.addEventListener('load', function(event) {
     json = JSON.parse(request.responseText);
     
     for(var i = 0; i < json.menu.tortillas.length; i++){
-      createMenu("tortilla", json.menu.tortillas[i].name, json.menu.tortillas[i].price);
+      var tortilla = new Ingredient();
+      tortilla.init("tortilla", json.menu.tortillas[i].name, json.menu.tortillas[i].price);
+      createMenu(tortilla);
     }
     for(var i = 0; i < json.menu.type.length; i++){
-      createMenu("filling", json.menu.type[i].name, json.menu.type[i].price);
+      var filling = new Ingredient();
+      filling.init("filling", json.menu.type[i].name, json.menu.type[i].price);
+      createMenu(filling);
     }
     for(var i = 0; i < json.menu.rice.length; i++){
-      createMenu("rice", json.menu.rice[i].name, json.menu.rice[i].price);
+      var rice = new Ingredient();
+      rice.init("rice", json.menu.rice[i].name, json.menu.rice[i].price);
+      createMenu(rice);
     }
     for(var i = 0; i < json.menu.beans.length; i++){
-      createMenu("bean", json.menu.beans[i].name, json.menu.beans[i].price);
+      var bean = new Ingredient();
+      bean.init("bean", json.menu.beans[i].name, json.menu.beans[i].price);
+      createMenu(bean);
     }
     for(var i = 0; i < json.menu.cheese.length; i++){
-      createMenu("cheese", json.menu.cheese[i].name, json.menu.cheese[i].price);
+      var cheese = new Ingredient();
+      cheese.init("cheese", json.menu.cheese[i].name, json.menu.cheese[i].price);
+      createMenu(cheese);
     }
     for(var i = 0; i < json.menu.sauces.length; i++){
-      createMenu("sauce", json.menu.sauces[i].name, json.menu.sauces[i].price);
+      var sauce = new Ingredient();
+      sauce.init("sauce", json.menu.sauces[i].name, json.menu.sauces[i].price);
+      createMenu(sauce);
     }
     for(var i = 0; i < json.menu.vegetables.length; i++){
-      createMenu("veggie", json.menu.vegetables[i].name, json.menu.vegetables[i].price);
+      var veggie = new Ingredient();
+      veggie.init("veggie", json.menu.vegetables[i].name, json.menu.vegetables[i].price);
+      createMenu(veggie);
     }
     for(var i = json.menu.extras.length - 1; i > -1; i--){
-      createMenu("extras", json.menu.extras[i].name, json.menu.extras[i].price);
+      var extras = new Ingredient();
+      extras.init("extras", json.menu.extras[i].name, json.menu.extras[i].price);
+      createMenu(extras);
     }
   }
   else {
@@ -57,10 +73,13 @@ window.addEventListener('load', function(event) {
   currTaco = new Taco();
 });
 
-var createMenu = function (type, name, price){
+var createMenu = function (ingredient){
+  var type = ingredient.type;
+  var name = ingredient.name;
+  var price = ingredient.price;
   var elm = document.createElement("div");
   var menuItem = $("<div class=\"" + type + " ingredient\"></div>");
-  menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\">");
+  menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\" price=\"" + price + "\">");
   menuItem.append("<span class=\"caption\">" + name + "</span>");
   menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
   menuItem.click(function(event){
@@ -68,15 +87,16 @@ var createMenu = function (type, name, price){
       //Deselect if selected
       if ($($this.children("img")[0]).hasClass("selected")){
 	$($this.children("img")[0]).removeClass("selected");
-	currTaco.remove(type, name);
+	currTaco.remove(ingredient);
       }
       else{
 	if ((type !== "veggie")&&(type !== "extras")){
 	  //Unselect any other selected values if the section is 1 or 0-1.
 	  if ($(".selected." + type)[0] !== undefined){
-	    var lastItemName = $(".selected." + type).attr('alt');
+	    var lastIngredient = new Ingredient();
+	    lastIngredient.init(type, $(".selected." + type).attr('alt'), $(".selected." + type).attr('price'));
 	    $(".selected." + type).removeClass("selected");
-	    currTaco.remove(type, name);
+	    currTaco.remove(lastIngredient);
 	  }
 	  //Move to next section.
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
@@ -85,20 +105,11 @@ var createMenu = function (type, name, price){
 	/*$('html, body').animate({
 	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).offset().top
       }, 400);*/
-	currTaco.addToScreen(type, name);
+	currTaco.addToScreen(ingredient);
       }
       
   });
   $("#" + type + "Menu").append(menuItem);
-};
-
-var addToTaco = function(type, name, price){
-  var fixing = $("<li>" + name + "</li>");
-  $(".fixing."+ type).append(fixing);
-};
-
-var removeFromTaco = function(type, name, price){
-  $("li").filter(":contains('"+ name + "')").remove();
 };
 
 function Taco() {
@@ -116,40 +127,47 @@ function Taco() {
   this.quantity = 0;
   this.price = 0;
   
-  this.addToScreen = function(type, name){
-    this.add(type, name);
-    this.print(type, name);
+  this.addToScreen = function(ingredient){
+    this.add(ingredient);
+    this.print(ingredient);
   }
   
-  this.add = function(type, name){
-   if ((type !== "veggie")&&(type !== "extras")){
-    this[type] = name; 
+  this.add = function(ingredient){
+   if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
+    this[ingredient.type] = ingredient.name; 
    }
    else{
-     this[type].push(name);
+     this[ingredient.type].push(ingredient.name);
    }
+   this.updatePrice(ingredient.price);
   }
   
-  this.print = function(type, name){
-    var fixing = $("<li>" + name + "</li>");
-    $(".fixing."+ type).append(fixing);
+  this.print = function(ingredient){
+    var fixing = $("<li>" + ingredient.name + "</li>");
+    $(".fixing."+ ingredient.type).append(fixing);
   };
   
-  this.remove = function(type, name){
+  this.remove = function(ingredient){
     //Remove from the view.
-    $("li").filter(":contains('"+ name + "')").remove();
-    if ((type !== "veggie")&&(type !== "extras")){
-     this[type] = "None";
+    $("li").filter(":contains('"+ ingredient.name + "')").remove();
+    if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
+     this[ingredient.type] = "None";
     }
     else{
       //Find the veggie/extra and remove it
-      for(var i=0; i<this[type].length; i++) {
-        if(this[type][i] == name) {
-            this[type].splice(i, 1);
-            break;
-       }
-    } 
+      for(var i = 0; i < this[ingredient.type].length; i++) {
+	  if(this[ingredient.type][i] == ingredient.name) {
+	      this[ingredient.type].splice(i, 1);
+	      break;
+	}
+      } 
     }
+    this.updatePrice(-1 * ingredient.price);
+  }
+  
+  this.updatePrice = function(change){
+    this.price += change;
+    $("#currentTaco .price").html("Price:$" + this.price.toFixed(2));
   }
 };
 
