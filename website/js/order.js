@@ -145,41 +145,76 @@ function Taco() {
   }
   
   this.add = function(ingredient){
-   if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
-    this[ingredient.type] = ingredient.name; 
+   if(ingredient !== undefined){
+      if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
+	this[ingredient.type] = ingredient; 
+      }
+      else{
+	this[ingredient.type].push(ingredient);
+      }
+      this.updatePrice(ingredient.price);
    }
-   else{
-     this[ingredient.type].push(ingredient.name);
-   }
-   this.updatePrice(ingredient.price);
   }
   
   this.print = function(ingredient){
-    var fixing = $("<li>" + ingredient.name + "</li>");
-    $(this.location + "."+ ingredient.type).append(fixing);
+    if(ingredient !== undefined){
+      var fixing = $("<li>" + ingredient.name + "</li>");
+      $(this.location + "."+ ingredient.type).append(fixing);
+    }
   };
   
   this.remove = function(ingredient){
-    //Remove from the view.
-    $(this.location + " li").filter(":contains('"+ ingredient.name + "')").remove();
-    if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
-     this[ingredient.type] = "None";
+    if(ingredient !== undefined){
+      //Remove from the view.
+      $(this.location + " li").filter(":contains('"+ ingredient.name + "')").remove();
+      if ((ingredient.type !== "veggie")&&(ingredient.type !== "extras")){
+      this[ingredient.type] = undefined;
+      }
+      else{
+	//Find the veggie/extra and remove it
+	for(var i = 0; i < this[ingredient.type].length; i++) {
+	    if(this[ingredient.type][i] == ingredient.name) {
+		this[ingredient.type].splice(i, 1);
+		break;
+	  }
+	} 
+      }
+      this.updatePrice(-1 * ingredient.price);
     }
-    else{
-      //Find the veggie/extra and remove it
-      for(var i = 0; i < this[ingredient.type].length; i++) {
-	  if(this[ingredient.type][i] == ingredient.name) {
-	      this[ingredient.type].splice(i, 1);
-	      break;
-	}
-      } 
-    }
-    this.updatePrice(-1 * ingredient.price);
   }
   
   this.updatePrice = function(change){
-    this.price += change;
-    $("#currentTaco .price").html("Price:$" + this.price.toFixed(2));
+    if (!isNaN(change)){
+      this.price += change;
+      $("#currentTaco .price").html("Price:$" + this.price.toFixed(2));
+    }
+  }
+  
+  this.clear = function(){
+   $(".selected").removeClass("selected");
+   this.remove(this["filling"]);
+   this.remove(this["tortilla"]);
+   this.remove(this["rice"]);
+   this.remove(this["bean"]);
+   this.remove(this["cheese"]);
+   this.remove(this["sauce"]);
+   for(var i = 0; i < this.veggie.length; i++)
+   {
+     this.remove(this.veggie[i]);
+   }
+   for(var i = 0; i < this.extras.length; i++)
+   {
+     this.remove(this.extras[i]);
+   }
+   $("#accordion").accordion("option", "active", 0);
+  }
+  
+  this.clearVeggies = function(){
+   $(".selected.veggie").removeClass("selected");
+   for(var i = 0; i < this.veggie.length; i++)
+   {
+     this.remove(this.veggie[i]);
+   }
   }
 };
 
