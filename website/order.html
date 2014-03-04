@@ -26,7 +26,7 @@
     </div>
     
     <div id="currentTaco">
-      <h3>Current Taco:</h3>
+      <h3 class="currTaco">Current Taco:</h3>
       <ul class="tortilla fixing">Tortilla:</ul>
       <ul class="filling fixing">Filling:</ul>
       <ul class="rice fixing">Rice:</ul>
@@ -35,10 +35,10 @@
       <ul class="sauce fixing">Sauce:</ul>
       <ul class="veggie fixing">Vegtables:</ul>
       <ul class="extras fixing">Extras:</ul>
-      <span class="price">Price:$0.00</span>
-      <label for="quantity">Quantity</label>
+      <div class="price currTaco" id="tacoPrice">Price:$0.00</div>
+      <label class="currTaco" for="quantity">Quantity</label>
       <input name="quantity" class="quantity"/>
-      <div class="button" id="addToCart">Add to Cart</div>
+      <div class="button currTaco" id="addToCart">Add to Cart</div>
     </div>
     
     <div id="background"></div>
