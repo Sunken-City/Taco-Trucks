@@ -4,45 +4,41 @@ window.addEventListener('load', function(event) {
 		window.location.replace("order.html");
 	});
 
-		var rootUrl = '127.0.0.1/tacotruck/website';
-
-
 		var createAUser = $('#signUp');
 		createAUser.click(function(){
 			event.preventDefault();
 			$.ajax({
-		        type: 'POST',
-		        contentType: 'application/json',
-		        url: rootUrl + '/api/users',
-		        dataType: "json",
-		        data: signUpFormToJSON(),
-		        success: function(data) {
-		            alert(data.message);
-		        },
-		        error: function() {
-		            alert('Error :(');
-		        }
-
-
+                type: 'POST',
+                contentType: 'application/json',
+                url: '/api/users',
+                dataType: "json",
+                data: signUpFormToJSON(),
+                success: function(data) {
+                    window.location.replace("order.html");
+                },
+                error: function(data) {
+                    alert('Error');
+                    console.log(data);
+                }
 
 	});
 		});
 
 			var loginAUser = $('#signIn');
-		loginAUser.click(function(){
+            loginAUser.click(function(){
 			event.preventDefault();
 			$.ajax({
-		        type: 'POST',
-		        contentType: 'application/json',
-		        url: rootUrl + '/api/login',
-		        dataType: "json",
-		        data: loginFormToJSON(),
-		        success: function() {
-		            alert('Success!');
-		        },
-		        error: function() {
-		            alert('Error :(');
-		        }
+                type: 'POST',
+                contentType: 'application/json',
+                url: '/api/login',
+                dataType: "json",
+                data: loginFormToJSON(),
+                success: function() {
+                    window.location.replace("order.html");
+                },
+                error: function() {
+                    alert('Error :(');
+                }
 
 
 
@@ -64,7 +60,7 @@ window.addEventListener('load', function(event) {
 function loginFormToJSON() {
     return JSON.stringify({
         "email": $('#email').val(),
-        "pass": $('#password').val(),
+        "password": $('#password').val(),
         });
 }
 // Helper function to serialize all the form fields into a JSON string
