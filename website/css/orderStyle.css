@@ -13,11 +13,54 @@
 #information
 {
     background-color: cyan;
+    //bottom: 0;
+    //right: 0;
+    //position: fixed;
+    width: 100%;
+    height: 10%;
 }
 
 #cart
 {
-    background-color: green;
+  top: 0;
+  right: 0;
+  position: fixed;
+  width: 10%;
+  height: 100%;
+  background-color: green;
+}
+
+#currentTaco
+{
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 10%;
+  background-color: red;
+}
+
+.fixing
+{
+  font-weight:bold;
+  list-style:none;
+}
+
+.fixing li
+{
+  font-weight:normal;
+  list-style: none;
+}
+
+.fixing.veggie li
+{
+  font-weight:normal;
+  list-style: outside;
+}
+
+.fixing.extras li
+{
+  font-weight:normal;
+  list-style: outside;
 }
 
 .caption
