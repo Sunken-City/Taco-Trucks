@@ -51,6 +51,18 @@
   list-style: none;
 }
 
+.fixing.veggie li
+{
+  font-weight:normal;
+  list-style: outside;
+}
+
+.fixing.extras li
+{
+  font-weight:normal;
+  list-style: outside;
+}
+
 .caption
 {
     float:left;

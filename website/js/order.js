@@ -1,5 +1,6 @@
   
 var json;
+var currTaco;
 
 window.addEventListener('load', function(event) {
 
@@ -52,6 +53,8 @@ window.addEventListener('load', function(event) {
     max : 100,
     showOn : 'both'
   });
+  
+  currTaco = new Taco();
 });
 
 var createMenu = function (type, name, price){
@@ -65,7 +68,7 @@ var createMenu = function (type, name, price){
       //Deselect if selected
       if ($($this.children("img")[0]).hasClass("selected")){
 	$($this.children("img")[0]).removeClass("selected");
-	removeFromTaco(type, name, price);
+	currTaco.remove(type, name);
       }
       else{
 	if ((type !== "veggie")&&(type !== "extras")){
@@ -73,7 +76,7 @@ var createMenu = function (type, name, price){
 	  if ($(".selected." + type)[0] !== undefined){
 	    var lastItemName = $(".selected." + type).attr('alt');
 	    $(".selected." + type).removeClass("selected");
-	    removeFromTaco(type, lastItemName, price);
+	    currTaco.remove(type, name);
 	  }
 	  //Move to next section.
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
@@ -82,7 +85,7 @@ var createMenu = function (type, name, price){
 	/*$('html, body').animate({
 	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).offset().top
       }, 400);*/
-	addToTaco(type, name, price);
+	currTaco.addToScreen(type, name);
       }
       
   });
@@ -98,10 +101,70 @@ var removeFromTaco = function(type, name, price){
   $("li").filter(":contains('"+ name + "')").remove();
 };
 
+function Taco() {
+  this.init = function(){
+  };
+  
+  this.filling = "None";
+  this.tortilla = "None";
+  this.rice = "None";
+  this.bean = "None";
+  this.cheese = "None";
+  this.sauce = "None";
+  this.veggie = [];
+  this.extras = [];
+  this.quantity = 0;
+  this.price = 0;
+  
+  this.addToScreen = function(type, name){
+    this.add(type, name);
+    this.print(type, name);
+  }
+  
+  this.add = function(type, name){
+   if ((type !== "veggie")&&(type !== "extras")){
+    this[type] = name; 
+   }
+   else{
+     this[type].push(name);
+   }
+  }
+  
+  this.print = function(type, name){
+    var fixing = $("<li>" + name + "</li>");
+    $(".fixing."+ type).append(fixing);
+  };
+  
+  this.remove = function(type, name){
+    //Remove from the view.
+    $("li").filter(":contains('"+ name + "')").remove();
+    if ((type !== "veggie")&&(type !== "extras")){
+     this[type] = "None";
+    }
+    else{
+      //Find the veggie/extra and remove it
+      for(var i=0; i<this[type].length; i++) {
+        if(this[type][i] == name) {
+            this[type].splice(i, 1);
+            break;
+       }
+    } 
+    }
+  }
+};
 
-
-
-
+function Ingredient()
+{
+  this.init = function(type, name, price){
+    this.type = type;
+    this.name = name;
+    this.price = price;
+  };
+  
+  this.type = "";
+  this.name = "";
+  this.price = 0;
+};
 
 
 
