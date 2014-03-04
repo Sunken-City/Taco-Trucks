@@ -9,7 +9,7 @@
   color: #00A480;
   padding: 40px;
 }
-
+/*
 #createATaco
 {
   position: relative;
@@ -57,6 +57,7 @@
   position: absolute;
   margin-left: 80%;
   margin-right: auto;
+
 }
 
 #createAccountDiv
@@ -65,7 +66,7 @@
   margin-right: 80%;
   margin-left: 80%;
 } 
-
+*/
 #createATaco
 {
   position: relative;
@@ -109,12 +110,15 @@
   margin-left: 80%;
   margin-right: auto;
   margin-top: -10%;
+  width: 20%;
 }
 #createAccountDiv
 {
   margin-top: -10%;
   margin-left: 5%;
-  margin-right:auto;;
+  margin-right:auto;
+  width: 30%;
+
 }
 
 li
