@@ -1,7 +1,6 @@
 var rootUrl = 'local.tacotruck.com';
 
-function addWine() {
-    console.log('addWine');
+function login() {
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
