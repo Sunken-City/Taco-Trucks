@@ -1,6 +1,8 @@
   
 var json;
 var currTaco;
+var cart;
+
 
 window.addEventListener('load', function(event) {
 
@@ -81,10 +83,11 @@ window.addEventListener('load', function(event) {
   });
   
   currTaco = new Taco();
+  cart = new Cart();
   
   //Create the click listeners
   $(".quantity").on("spinstop", function(event, ui){
-    currTaco.priceModifier = $(".quantity").spinner("value");
+    currTaco.quantity = $(".quantity").spinner("value");
     currTaco.updatePrice(0);
   });
   
@@ -138,6 +141,8 @@ var createMenu = function (ingredient){
   $("#" + type + "Menu").append(menuItem);
 };
 
+//Logical objects for the page.
+
 function Taco() {
   this.init = function(){
   };
@@ -150,9 +155,10 @@ function Taco() {
   this.sauce = "";
   this.veggie = [];
   this.extras = [];
-  this.quantity = 0;
   this.price = 0;
-  this.priceModifier = 1;
+  this.quantity = 1;
+  this.components = ["filling","tortilla","rice","bean","cheese","sauce"];
+  
   
   this.location = ".fixing"
   
@@ -198,17 +204,17 @@ function Taco() {
       }
       this.updatePrice(-1 * ingredient.price);
     }
-  }
+  };
   
   this.updatePrice = function(change){
     if (!isNaN(change)){
       this.price += change;
-      $("#currentTaco .price").html("Price:$" + (this.price * this.priceModifier).toFixed(2) );
+      $("#currentTaco .price").html("Price:$" + (this.price * this.quantity).toFixed(2) );
     }
     else{
       $("#currentTaco .price").html("Invalid Quantity!");
     }
-  }
+  };
   
   this.clear = function(){
    $(".selected").removeClass("selected");
@@ -240,8 +246,7 @@ function Taco() {
   }
 };
 
-function Ingredient()
-{
+function Ingredient() {
   this.init = function(type, name, price){
     this.type = type;
     this.name = name;
@@ -253,10 +258,47 @@ function Ingredient()
   this.price = 0;
 };
 
+function Cart() {
+  
+  this.items = [];
+  
+  this.add = function (taco) {
+    var cartTaco = ShallowCopy(taco);
+    cartTaco.location = ".cartTaco";
+    this.items.push(cartTaco);
+    this.print(cartTaco);
+    currTaco.clear();
+    //currTaco = new Taco();
+  };
+  
+  this.print = function(taco) {
+    var tacoItem = $("<ul class=\"cartTaco\"></ul>");
+    for (var i = 0; i < taco.components.length; i++) {
+      var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
+      tacoItem.append(fixing);
+    }
+    for (var ingredient in taco["veggie"]) {
+      var fixing = $("<li>" + ingredient.name + "</li>");
+      tacoItem.append(fixing);
+    }
+    for (var ingredient in taco["extras"]) {
+      var fixing = $("<li>" + ingredient.name + "</li>");
+      tacoItem.append(fixing);
+    }
+    $("#cartItems").append(tacoItem);
+  }
+};
 
-
-
-
+//From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
+function ShallowCopy(o) {
+  var copy = Object.create(o);
+  for (prop in o) {
+    if (o.hasOwnProperty(prop)) {
+      copy[prop] = o[prop];
+    }
+  }
+  return copy;
+}
 
 
 
