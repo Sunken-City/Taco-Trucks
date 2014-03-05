@@ -96,6 +96,11 @@
   margin-bottom: 1.5%;
 }
 
+.fillMe
+{
+  color: #FF0000;
+}
+
 ul.fixing
 {
   float: left;

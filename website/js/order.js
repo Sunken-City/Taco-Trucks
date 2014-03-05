@@ -100,7 +100,19 @@ window.addEventListener('load', function(event) {
   });
   
   $( "#addToCart" ).click(function() {
-    cart.add(currTaco);
+    if (currTaco["tortilla"] === ""){
+      moveTo(0);
+      $("#accordion").accordion("option", "active", 0);
+      $("#ui-accordion-accordion-header-0").addClass("fillMe");
+    }
+    else if (currTaco["filling"] === ""){
+      moveTo(1);
+      $("#accordion").accordion("option", "active", 1);
+      $("#ui-accordion-accordion-header-1").addClass("fillMe");
+    }
+    else {
+      cart.add(currTaco);
+    }
   });
 });
 
@@ -130,12 +142,11 @@ var createMenu = function (ingredient){
 	    currTaco.remove(lastIngredient);
 	  }
 	  //Move to next section.
-	  $('html, body').animate({
-	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active"))).offset().top
-	  }, 400);
+	  moveTo(($("#accordion").accordion("option", "active")));
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
 	}
 	$($this.children("img")[0]).addClass("selected");
+	$("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).removeClass("fillMe");
 	
 	currTaco.addToScreen(ingredient);
       }
@@ -230,9 +241,7 @@ function Taco() {
    this.clearVeggies();
    this.clearExtras();
    $("#accordion").accordion("option", "active", 0);
-   $('html, body').animate({
-     scrollTop: $("#ui-accordion-accordion-header-0").offset().top
-   }, 400);
+   moveTo(0);
    this.price = 0;
    this.updatePrice(0);
   }
@@ -282,16 +291,22 @@ function Cart() {
   this.print = function(taco) {
     var tacoItem = $("<ul class=\"cartTaco\"></ul>");
     for (var i = 0; i < taco.components.length; i++) {
-      var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
-      tacoItem.append(fixing);
+      if (taco[taco.components[i]].name !== undefined) {
+	var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
     for (var i = 0; i < taco["veggie"].length; i++) {
-      var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
-      tacoItem.append(fixing);
+      if (taco["veggie"][i].name !== undefined) {
+	var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
     for (var i = 0; i < taco["extras"].length; i++) {
-      var fixing = $("<li>" + taco["extras"][i].name + "</li>");
-      tacoItem.append(fixing);
+      if (taco["extras"][i].name !== undefined) {
+	var fixing = $("<li>" + taco["extras"][i].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
     $("#cartItems").append(tacoItem);
   }
@@ -306,6 +321,12 @@ function ShallowCopy(o) {
     }
   }
   return copy;
+}
+
+function moveTo(headerNumber){
+  $('html, body').animate({
+    scrollTop: $("#ui-accordion-accordion-header-" + headerNumber).offset().top
+  }, 400); 
 }
 
 
