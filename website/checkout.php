@@ -27,6 +27,26 @@
 		</section>
 		<section id="payment">
 			<h3>Payment Information</h3>
+			<form id="createAccount" action = "" method = "post">
+        		<ul>
+	       			<li>
+	            		<input type="text" placeholder="First Name" id="firstName" name = "firstName"required/>
+	        		</li>
+
+	        		<li>
+	            		<input type="text" placeholder="Last Name" id="lastName" name = "lastName"required/>
+			        </li>
+
+			        <li>
+			            <input type="text" placeholder="Credit Card Provider" id="CardProvider" name = "cardProvider" title = "Visa" required />
+			        </li>
+
+			        <li>
+			            <input type="text" placeholder="Credit Card Number" id="creditCardNumber" name = "creditCardNumber" title="1234123412341234" pattern = "(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})" required />
+			        </li>
+        		</ul>
+           		<input type="submit" value="Pay" id="payment" class = "submit" />
+      		</form>
 
 
 		</section>

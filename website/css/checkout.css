@@ -1,6 +1,5 @@
 #map-canvas
 {
-	position: static;
     height: 50%;
     width: 50%;
     margin-left: 20%;
@@ -19,7 +18,7 @@
     margin-right: 25%;
     border-style: solid;
     border-width: 5px;
-    border-bottom-width: 5px;
+    border-bottom-width: 1px;
     border-color: black;
     text-align: center;
 }
@@ -32,7 +31,12 @@
 }
 #payment
 {
-	position: absolute;
 	width:50%;
 	text-align: center;
+}
+
+li
+{
+	list-style: none;
+	margin-left:-10%;
 }
