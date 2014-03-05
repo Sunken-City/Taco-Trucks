@@ -81,6 +81,11 @@ window.addEventListener('load', function(event) {
   });
   
   currTaco = new Taco();
+  $(".quantity").on("spinstop", function(event, ui){
+    console.log("GAAAAAAAAAAAAAA");
+    currTaco.priceModifier = $(".quantity").spinner("value");
+    currTaco.updatePrice(0);
+  });
 });
 
 var createMenu = function (ingredient){
@@ -136,6 +141,7 @@ function Taco() {
   this.extras = [];
   this.quantity = 0;
   this.price = 0;
+  this.priceModifier = 1;
   
   this.location = ".fixing"
   
@@ -186,7 +192,7 @@ function Taco() {
   this.updatePrice = function(change){
     if (!isNaN(change)){
       this.price += change;
-      $("#currentTaco .price").html("Price:$" + this.price.toFixed(2));
+      $("#currentTaco .price").html("Price:$" + (this.price * this.priceModifier).toFixed(2) );
     }
   }
   
