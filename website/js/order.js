@@ -95,6 +95,10 @@ window.addEventListener('load', function(event) {
     currTaco.clearVeggies();
   });
   
+  $( "#clearExtras" ).click(function() {
+    currTaco.clearExtras();
+  });
+  
   $( "#clearTaco" ).click(function() {
     currTaco.clear();
   });
@@ -291,20 +295,23 @@ function Cart() {
   this.print = function(taco) {
     var tacoItem = $("<ul class=\"cartTaco\"></ul>");
     for (var i = 0; i < taco.components.length; i++) {
-      if (taco[taco.components[i]].name !== undefined) {
-	var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
+      var name = taco[taco.components[i]].name;
+      if ((name !== undefined)&&(name !== "None")&&(name !== "No Sauce")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
     for (var i = 0; i < taco["veggie"].length; i++) {
-      if (taco["veggie"][i].name !== undefined) {
-	var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
+      var name = taco["veggie"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
     for (var i = 0; i < taco["extras"].length; i++) {
-      if (taco["extras"][i].name !== undefined) {
-	var fixing = $("<li>" + taco["extras"][i].name + "</li>");
+      var name = taco["extras"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
