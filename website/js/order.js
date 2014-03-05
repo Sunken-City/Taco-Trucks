@@ -280,12 +280,12 @@ function Cart() {
       var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
       tacoItem.append(fixing);
     }
-    for (var ingredient in taco["veggie"]) {
-      var fixing = $("<li>" + ingredient.name + "</li>");
+    for (var i = 0; i < taco["veggie"].length; i++) {
+      var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
       tacoItem.append(fixing);
     }
-    for (var ingredient in taco["extras"]) {
-      var fixing = $("<li>" + ingredient.name + "</li>");
+    for (var i = 0; i < taco["extras"].length; i++) {
+      var fixing = $("<li>" + taco["extras"][i].name + "</li>");
       tacoItem.append(fixing);
     }
     $("#cartItems").append(tacoItem);
