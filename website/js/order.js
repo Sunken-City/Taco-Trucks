@@ -82,7 +82,6 @@ window.addEventListener('load', function(event) {
   
   currTaco = new Taco();
   $(".quantity").on("spinstop", function(event, ui){
-    console.log("GAAAAAAAAAAAAAA");
     currTaco.priceModifier = $(".quantity").spinner("value");
     currTaco.updatePrice(0);
   });
@@ -193,6 +192,9 @@ function Taco() {
     if (!isNaN(change)){
       this.price += change;
       $("#currentTaco .price").html("Price:$" + (this.price * this.priceModifier).toFixed(2) );
+    }
+    else{
+      $("#currentTaco .price").html("Invalid Quantity!");
     }
   }
   

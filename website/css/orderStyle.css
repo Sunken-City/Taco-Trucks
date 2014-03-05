@@ -26,6 +26,19 @@
   background-color: red;
 }
 
+img
+{
+  padding:8px;
+}
+
+img:hover
+{
+  border-style: ridge;
+  border-width: 8px;
+  border-color: #F0C73C;
+  padding: 0px;
+}
+
 .fixing
 {
   font-weight:bold;

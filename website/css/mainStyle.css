@@ -9,15 +9,29 @@ h1,h2,h3,h4,h5,h6
   font-family: 'Hammersmith One', sans-serif;
 }
 
-img
+.button
 {
-  padding:8px;
+  display: inline-block;
+  background-image: url('../resources/backgrounds/blackorchid.png');
+  border-style: solid;
+  border-color: #333;
+  border-radius: 50px 5px;
+  color: #FF6000;
+  width: auto;
 }
 
-img:hover
+.button:hover
 {
-  border-style: ridge;
-  border-width: 8px;
-  border-color: #F0C73C;
-  padding: 0px;
+  opacity: 0.9
+}
+
+.buttonText
+{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+
 }

@@ -28,13 +28,14 @@
   opacity: 0.9
 }
 
-.buttonText
+#createATaco .buttonText
 {
   position: relative;
   margin-left: auto;
   margin-right: auto;
   width: 7em;
   font-size: 4em;
+  padding: 0px;
   color: #FF6000;  
 
 }
