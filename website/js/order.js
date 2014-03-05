@@ -95,8 +95,16 @@ window.addEventListener('load', function(event) {
     currTaco.clearVeggies();
   });
   
+  $( "#clearExtras" ).click(function() {
+    currTaco.clearExtras();
+  });
+  
   $( "#clearTaco" ).click(function() {
     currTaco.clear();
+  });
+  
+  $("#checkout").click(function() {
+    window.location.replace("checkout.php");
   });
   
   $( "#addToCart" ).click(function() {
@@ -278,6 +286,7 @@ function Ingredient() {
 function Cart() {
   
   this.items = [];
+  this.total = 0;
   
   this.add = function (taco) {
     var cartTaco = ShallowCopy(taco);
@@ -291,25 +300,39 @@ function Cart() {
   this.print = function(taco) {
     var tacoItem = $("<ul class=\"cartTaco\"></ul>");
     for (var i = 0; i < taco.components.length; i++) {
-      if (taco[taco.components[i]].name !== undefined) {
-	var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
+      var name = taco[taco.components[i]].name;
+      if ((name !== undefined)&&(name !== "None")&&(name !== "No Sauce")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
     for (var i = 0; i < taco["veggie"].length; i++) {
-      if (taco["veggie"][i].name !== undefined) {
-	var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
+      var name = taco["veggie"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
     for (var i = 0; i < taco["extras"].length; i++) {
-      if (taco["extras"][i].name !== undefined) {
-	var fixing = $("<li>" + taco["extras"][i].name + "</li>");
+      var name = taco["extras"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
 	tacoItem.append(fixing);
       }
     }
     $("#cartItems").append(tacoItem);
+    this.updatePrice(taco.price * taco.quantity);
   }
+  
+  this.updatePrice = function(change){
+    if (!isNaN(change)){
+      this.total += change;
+      $("#total").html("Total:$" + (this.total).toFixed(2) );
+    }
+    else{
+      $("#total").html("Invalid Quantity!");
+    }
+  };
 };
 
 //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
