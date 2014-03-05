@@ -14,7 +14,10 @@ window.addEventListener('load', function(event) {
                 dataType: "json",
                 data: signUpFormToJSON(),
                 success: function(data) {
-                    window.location.replace("order.html");
+                    console.log(data);
+                    // if (data.success) {
+                    //     window.location.replace("order.html");
+                    // }
                 },
                 error: function(data) {
                     alert('Error');
@@ -33,16 +36,15 @@ window.addEventListener('load', function(event) {
                 url: '/api/login',
                 dataType: "json",
                 data: loginFormToJSON(),
-                success: function() {
-                    window.location.replace("order.html");
+                success: function(data) {
+                    // window.location.replace("order.html");
+                    console.log(data);
                 },
-                error: function() {
+                error: function(data) {
                     alert('Error :(');
+                        console.log(data);
                 }
-
-
-
-	});
+            });
 		});
 
 
@@ -58,16 +60,18 @@ window.addEventListener('load', function(event) {
 
 // Helper function to serialize all the form fields into a JSON string
 function loginFormToJSON() {
+    console.log("email :" + $('#loginEmail').val());
+    console.log("password:" + $('#loginPassword').val());
     return JSON.stringify({
-        "email": $('#email').val(),
-        "password": $('#password').val(),
+        "email": $('#loginEmail').val(),
+        "password": $('#loginPassword').val()
         });
 }
 // Helper function to serialize all the form fields into a JSON string
 function signUpFormToJSON() {
     return JSON.stringify({
-        "email": $('#email').val(),
-        "password": $('#password').val(),
+        "email": $('#createEmail').val(),
+        "password": $('#createPassword').val(),
         "f_name":$('#firstName').val(),
         "l_name":$('#lastName').val(),
         "cc_p":$('#CardProvider').val(),

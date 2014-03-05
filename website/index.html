@@ -28,15 +28,15 @@
         </li>
 
         <li>
-            <input type="email" placeholder="Email" id="email" name = "email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" title = "name@email.com" required/>
+            <input type="email" placeholder="Email" id="createEmail" name="create_email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" title = "name@email.com" required/>
         </li>
 
         <li>
-            <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}" title = "ThisIsASamplePass2014" required/>
+            <input type="password" id="createPassword" name="create_pass" placeholder="Password" required/>
         </li>
 
         <li>
-            <input type="text" placeholder="Credit Card Provider" id = "CardProvider" name = "cardProvider" title = "Visa" required />
+            <input type="text" placeholder="Credit Card Provider" id="CardProvider" name = "cardProvider" title = "Visa" required />
         </li>
 
         <li>
@@ -49,18 +49,18 @@
 
     <div id = "loginDiv">
       <h2 class ="login">Login</h2>
-      <form id="login" action = "" method = "post">
+      <div id="login">
         <ul>
         <li>
-            <input type="email" placeholder="Email" id="email" name = "email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" title = "name@email.com" required/>
+            <input type="email" placeholder="Email" id="loginEmail" name = "login_email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" title = "name@email.com" required/>
         </li>
 
         <li>
-            <input type="password" id="password" name = "password" pattern = "[a-zA-Z0-9:.,?!@]{8,}" placeholder = "Password" oninvalid="setCustomValidity('Password must be greater than 8 characters')" onchange="try{setCustomValidity('')}catch(e){}"  title = "ThisIsASamplePass2014" required/>
+            <input type="password" id="loginPassword" name="login_pass"  placeholder="Password" required/>
         </li>
           </ul>
            <input type="submit" value="Sign In" id="signIn"class = "submit" />
-      </form>
+      </div>
     </div>
 
     <div id="createATaco">

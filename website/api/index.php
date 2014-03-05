@@ -5,7 +5,7 @@ require_once('../../lib/password.php');
 require_once('../../lib/session.php');
 
 session_cache_limiter(false);
-getSession();
+
 
 $app = new \Slim\Slim();
 $app->log->setEnabled(true);
@@ -23,11 +23,15 @@ $app->get('/', function() use ($app)
 
 $app->run();
 
+
+
 function getPreviousOrder()
 {
-    $app = \Slim\Slim::getInstance();   
+    getSession();
+    $app = \Slim\Slim::getInstance();
+
     if(!validateSession('email'))
-        $app->halt(404);
+        echo "Session but no email??";// $app->halt(404);
     else
     {
         $email = $_SESSION['email'];
@@ -38,6 +42,7 @@ function getPreviousOrder()
 
 function getLocations()
 {
+    getSession();
     $app = \Slim\Slim::getInstance();
     $sql = "SELECT * FROM truck_locations";
     $response;
@@ -60,6 +65,8 @@ function getLocations()
 
 function authenticateUser()
 {
+    getSession();
+
     $app = \Slim\Slim::getInstance();
     $user;
     $sql = "SELECT `pass` FROM `users` WHERE email=:email";
@@ -96,11 +103,11 @@ function authenticateUser()
         if(password_verify($user->password, $row['pass']))
         {
             newSession(sha1(SALT.$user->email));
-            $_SESSION['email'] = $email;
-            echo json_encode("[ { 'success': true } ]");
+            $_SESSION['email'] = $user->email;
+            echo json_encode("[ { 'success': true, 'email': ".$_SESSION['email']." } ]");
         }
         else //user has failed login
-        echo json_encode("[ { 'success': false } ]");
+        echo json_encode("[ { 'success': false, 'message': 'pass bad' } ]");
     }
     else // if errors have occured
         echo json_encode("[ { 'success': false } ]");
@@ -108,6 +115,8 @@ function authenticateUser()
 
 function getMenu()
 {
+    getSession();
+
     $app = \Slim\Slim::getInstance();
     $sql = "SELECT `name`, `price` FROM `fixins` INNER JOIN (`fixinClass`) ON 
     (`fixins`.`fixin_classId`=`fixinClass`.`fixin_classId`) 
@@ -170,6 +179,7 @@ function getConnection()
 
 function createUser()
 {
+    getSession();
     $app = \Slim\Slim::getInstance();
     $sql = "INSERT INTO `users`(`f_name`, `l_name`, `email`, `pass`,
         `telephoneNumber`, `cc_provider`, `cc_number`)
@@ -206,6 +216,7 @@ function createUser()
             $response['success'] = true;
             $response['message'] = "User created";
             newSession(sha1(SALT.$user->email));
+            $_SESSION['email'] = $user->email;
         }
         else
         {
