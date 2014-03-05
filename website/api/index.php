@@ -91,7 +91,7 @@ function getLocations()
 {
     getSession();
     $app = \Slim\Slim::getInstance();
-    $sql = "SELECT * FROM truck_locations";
+    $sql = "SELECT * FROM locations";
     $response;
     try
     {
