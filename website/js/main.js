@@ -76,6 +76,6 @@ function signUpFormToJSON() {
         "l_name":$('#lastName').val(),
         "cc_p":$('#CardProvider').val(),
         "cc_n":$('#creditCardNumber').val(),
-        "tele_num": '214-159-1595'
+        "tele_num": '000-000-0000'
         });
 }

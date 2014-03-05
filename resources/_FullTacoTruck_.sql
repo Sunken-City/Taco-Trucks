@@ -118,6 +118,27 @@ INSERT INTO `fixins` (`fixinId`, `name`, `price`, `fixin_classId`) VALUES
 
 -- --------------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS `locations` (
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `zipcode` int(11) NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`name`, `address`, `city`, `state`, `zipcode`) VALUES
+('Addison Circle Park', 'Addison Circle', 'Addison', 'TX', 75001),
+('Deep Ellum', '2630 Commerce St', 'Dallas', 'TX', 75226),
+('Klyde Warren Park', '2012 Woodall Rodgers Fwy', 'Dallas', 'TX', 75201),
+('Southern Methodist Unversity', '6425 Boaz Lane', 'Dallas', 'TX', 75205),
+('Truck Yard', '5624 Sears St', 'Dallas', 'TX', 75206);
+
+
 --
 -- Table structure for table `orderItem`
 --
