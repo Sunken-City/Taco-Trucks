@@ -14,22 +14,19 @@ window.addEventListener('load', function(event) {
                 dataType: "json",
                 data: signUpFormToJSON(),
                 success: function(data) {
-                    console.log(data);
-                    // if (data.success) {
-                    //     window.location.replace("order.html");
-                    // }
+                    if (data.success) {
+                        window.location.replace("order.html");
+                    }
                 },
                 error: function(data) {
-                    alert('Error');
-                    console.log(data);
+                    alert('Errors occured during your request :(');
                 }
-
-	});
+            });
 		});
 
-			var loginAUser = $('#signIn');
-            loginAUser.click(function(){
-			event.preventDefault();
+		var loginAUser = $('#signIn');
+        loginAUser.click(function(){
+
 			$.ajax({
                 type: 'POST',
                 contentType: 'application/json',
@@ -37,31 +34,50 @@ window.addEventListener('load', function(event) {
                 dataType: "json",
                 data: loginFormToJSON(),
                 success: function(data) {
-                    // window.location.replace("order.html");
-                    console.log(data);
+                    if (data.success) {
+                        window.location.replace("order.html");
+                    }
+                    else {
+                        if(data.message !== undefined) {
+                            alert("We don't have that email! Try creating "+
+                                "an Account!");
+                            autoFillCreateAccount();
+                        }
+                        else {
+                            alert("Login failed");
+                            $('#loginPassword').val('');
+                        }
+                    }
                 },
                 error: function(data) {
-                    alert('Error :(');
-                        console.log(data);
+                    alert('Errors occured during your request :(');
+                    $('#loginPassword').val('');
                 }
             });
 		});
-
-
 
 });
 
 
 
 
+function autoFillCreateAccount()
+{
+    var loginEmail = $('#loginEmail');
+    var loginPassword = $('#loginPassword');
+    var email = loginEmail.val();
+    var pass = loginPassword.val();
 
+    loginPassword.val('');
+
+    $('#createEmail').val(email);
+    $('#createPassword').val(pass);
+}
 
 
 
 // Helper function to serialize all the form fields into a JSON string
 function loginFormToJSON() {
-    console.log("email :" + $('#loginEmail').val());
-    console.log("password:" + $('#loginPassword').val());
     return JSON.stringify({
         "email": $('#loginEmail').val(),
         "password": $('#loginPassword').val()

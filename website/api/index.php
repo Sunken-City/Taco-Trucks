@@ -118,6 +118,7 @@ function authenticateUser()
     $user;
     $sql = "SELECT `pass` FROM `users` WHERE email=:email";
     $errors = false;
+    $response;
 
     try
     {
@@ -129,19 +130,30 @@ function authenticateUser()
             $stmt = $db->prepare($sql);
             $stmt->execute(array(':email' => $user->email));
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(!$row)
+            {
+                $errors = true;
+                $response['success'] = false;
+                $response['message'] = "User does not exist";
+            }
         }
         else
+        {
             $errors = true;
+            $response['success'] = false;
+        }
     }
     catch (PDOException $e)
     {
         $app->log->error($e->getMessage());
         $errors = true;
+        $response['success'] = false;
     }
     catch (Exception $e)
     {
         $app->log->error($e->getMessage());
         $errors = true;
+        $response['success'] = false;
     }
 
     // if no errors have occured, start new session.
@@ -151,13 +163,13 @@ function authenticateUser()
         {
             newSession(sha1(SALT.$user->email));
             $_SESSION['email'] = $user->email;
-            echo json_encode("[ { 'success': true, 'email': ".$_SESSION['email']." } ]");
+            $response['success'] = true;
+            $response['message'] = "User logged in successfully";
         }
         else //user has failed login
-        echo json_encode("[ { 'success': false, 'message': 'pass bad' } ]");
+            $response['success'] = false;
     }
-    else // if errors have occured
-        echo json_encode("[ { 'success': false } ]");
+    echo json_encode($response);
 }
 
 function getMenu()
@@ -241,7 +253,7 @@ function createUser()
         $user = json_decode($body);
         $db = getConnection();
         
-        // check if user email already exisits
+        // check if user email already exists
         $stmt = $db->prepare($sql_check);
         $stmt->execute(array(':email' => $user->email));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
