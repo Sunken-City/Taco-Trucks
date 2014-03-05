@@ -27,7 +27,7 @@
 		</section>
 		<section id="payment">
 			<h3>Payment Information</h3>
-			<form id="createAccount" action = "" method = "post">
+			<form id="createAccount" action = "recipt.html" method = "post">
         		<ul>
 	       			<li>
 	            		<input type="text" placeholder="First Name" id="firstName" name = "firstName"required/>
