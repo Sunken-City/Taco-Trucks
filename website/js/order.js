@@ -103,6 +103,10 @@ window.addEventListener('load', function(event) {
     currTaco.clear();
   });
   
+  $("#checkout").click(function() {
+    window.location.replace("checkout.php");
+  });
+  
   $( "#addToCart" ).click(function() {
     if (currTaco["tortilla"] === ""){
       moveTo(0);
@@ -282,6 +286,7 @@ function Ingredient() {
 function Cart() {
   
   this.items = [];
+  this.total = 0;
   
   this.add = function (taco) {
     var cartTaco = ShallowCopy(taco);
@@ -316,7 +321,18 @@ function Cart() {
       }
     }
     $("#cartItems").append(tacoItem);
+    this.updatePrice(taco.price * taco.quantity);
   }
+  
+  this.updatePrice = function(change){
+    if (!isNaN(change)){
+      this.total += change;
+      $("#total").html("Total:$" + (this.total).toFixed(2) );
+    }
+    else{
+      $("#total").html("Invalid Quantity!");
+    }
+  };
 };
 
 //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
