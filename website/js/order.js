@@ -227,26 +227,31 @@ function Taco() {
    this.remove(this["bean"]);
    this.remove(this["cheese"]);
    this.remove(this["sauce"]);
-   for(var i = 0; i < this.veggie.length; i++)
-   {
-     this.remove(this.veggie[i]);
-   }
-   for(var i = 0; i < this.extras.length; i++)
-   {
-     this.remove(this.extras[i]);
-   }
+   this.clearVeggies();
+   this.clearExtras();
    $("#accordion").accordion("option", "active", 0);
+   $('html, body').animate({
+     scrollTop: $("#ui-accordion-accordion-header-0").offset().top
+   }, 400);
    this.price = 0;
    this.updatePrice(0);
   }
   
   this.clearVeggies = function(){
    $(".selected.veggie").removeClass("selected");
-   for(var i = 0; i < this.veggie.length; i++)
+   for(var i = this.veggie.length - 1; i > -1 ; i--)
    {
      this.remove(this.veggie[i]);
    }
-  }
+  };
+  
+  this.clearExtras = function(){
+   $(".selected.extras").removeClass("selected");
+   for(var i = this.extras.length - 1; i > -1 ; i--)
+   {
+     this.remove(this.extras[i]);
+   }
+  };
 };
 
 function Ingredient() {
