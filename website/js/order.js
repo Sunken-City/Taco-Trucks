@@ -99,6 +99,21 @@ window.addEventListener('load', function(event) {
     currTaco.clear();
   });
   
+  $( "#addToCart" ).click(function() {
+    if (currTaco["tortilla"] === ""){
+      moveTo(0);
+      $("#accordion").accordion("option", "active", 0);
+      $("#ui-accordion-accordion-header-0").addClass("fillMe");
+    }
+    else if (currTaco["filling"] === ""){
+      moveTo(1);
+      $("#accordion").accordion("option", "active", 1);
+      $("#ui-accordion-accordion-header-1").addClass("fillMe");
+    }
+    else {
+      cart.add(currTaco);
+    }
+  });
 });
 
 var createMenu = function (ingredient){
@@ -127,12 +142,11 @@ var createMenu = function (ingredient){
 	    currTaco.remove(lastIngredient);
 	  }
 	  //Move to next section.
-	  $('html, body').animate({
-	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active"))).offset().top
-	  }, 400);
+	  moveTo(($("#accordion").accordion("option", "active")));
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
 	}
 	$($this.children("img")[0]).addClass("selected");
+	$("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).removeClass("fillMe");
 	
 	currTaco.addToScreen(ingredient);
       }
@@ -196,7 +210,7 @@ function Taco() {
       else{
 	//Find the veggie/extra and remove it
 	for(var i = 0; i < this[ingredient.type].length; i++) {
-	    if(this[ingredient.type][i] == ingredient.name) {
+	    if(this[ingredient.type][i].name == ingredient.name) {
 		this[ingredient.type].splice(i, 1);
 		break;
 	  }
@@ -224,26 +238,29 @@ function Taco() {
    this.remove(this["bean"]);
    this.remove(this["cheese"]);
    this.remove(this["sauce"]);
-   for(var i = 0; i < this.veggie.length; i++)
-   {
-     this.remove(this.veggie[i]);
-   }
-   for(var i = 0; i < this.extras.length; i++)
-   {
-     this.remove(this.extras[i]);
-   }
+   this.clearVeggies();
+   this.clearExtras();
    $("#accordion").accordion("option", "active", 0);
+   moveTo(0);
    this.price = 0;
    this.updatePrice(0);
   }
   
   this.clearVeggies = function(){
    $(".selected.veggie").removeClass("selected");
-   for(var i = 0; i < this.veggie.length; i++)
+   for(var i = this.veggie.length - 1; i > -1 ; i--)
    {
      this.remove(this.veggie[i]);
    }
-  }
+  };
+  
+  this.clearExtras = function(){
+   $(".selected.extras").removeClass("selected");
+   for(var i = this.extras.length - 1; i > -1 ; i--)
+   {
+     this.remove(this.extras[i]);
+   }
+  };
 };
 
 function Ingredient() {
@@ -274,16 +291,22 @@ function Cart() {
   this.print = function(taco) {
     var tacoItem = $("<ul class=\"cartTaco\"></ul>");
     for (var i = 0; i < taco.components.length; i++) {
-      var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
-      tacoItem.append(fixing);
+      if (taco[taco.components[i]].name !== undefined) {
+	var fixing = $("<li>" + taco[taco.components[i]].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
-    for (var ingredient in taco["veggie"]) {
-      var fixing = $("<li>" + ingredient.name + "</li>");
-      tacoItem.append(fixing);
+    for (var i = 0; i < taco["veggie"].length; i++) {
+      if (taco["veggie"][i].name !== undefined) {
+	var fixing = $("<li>" + taco["veggie"][i].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
-    for (var ingredient in taco["extras"]) {
-      var fixing = $("<li>" + ingredient.name + "</li>");
-      tacoItem.append(fixing);
+    for (var i = 0; i < taco["extras"].length; i++) {
+      if (taco["extras"][i].name !== undefined) {
+	var fixing = $("<li>" + taco["extras"][i].name + "</li>");
+	tacoItem.append(fixing);
+      }
     }
     $("#cartItems").append(tacoItem);
   }
@@ -298,6 +321,12 @@ function ShallowCopy(o) {
     }
   }
   return copy;
+}
+
+function moveTo(headerNumber){
+  $('html, body').animate({
+    scrollTop: $("#ui-accordion-accordion-header-" + headerNumber).offset().top
+  }, 400); 
 }
 
 
