@@ -21,9 +21,7 @@
   <body>
     <h1>Create A Taco</h1>
     
-    <div id="cart">
-      
-    </div>
+    <div id="previousOrder"></div>
     
     <div id="currentTaco">
       <h3 class="currTaco">Current Taco:</h3>
@@ -37,13 +35,15 @@
       <ul class="extras fixing">Extras:</ul>
       <div class="price currTaco" id="tacoPrice">Price:$0.00</div>
       <label class="currTaco" for="quantity">Quantity</label>
-      <input name="quantity" class="quantity"/>
-      <div class="button currTaco" id="addToCart">Add to Cart</div>
+      <input name="quantity" class="quantity" value="1"/>
+      <span class="button currTaco" id="addToCart">
+	<span class="buttonText">Add to Cart</span>
+      </span>
     </div>
     
-    <div id="background"></div>
-    
-    <div class="button" id="login">Login</div>
+    <span class="button" id="login">
+      <span class="buttonText">Login</span>
+    </span>
     
     <div id="accordion">
       <h3>Step 1: Choose your Tortilla</h3>
@@ -68,7 +68,9 @@
       <h3>Cart:</h3>
       <div id="cartItems"></div>
       <span id="total">Total:</span>
-      <div class="button" id="checkout">Checkout</div>
+      <span class="button" id="checkout">
+	<span class="buttonText">Checkout</span>
+      </span>
     </div>
     
     
