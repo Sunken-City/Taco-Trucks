@@ -99,6 +99,9 @@ window.addEventListener('load', function(event) {
     currTaco.clear();
   });
   
+  $( "#addToCart" ).click(function() {
+    cart.add(currTaco);
+  });
 });
 
 var createMenu = function (ingredient){
@@ -196,7 +199,7 @@ function Taco() {
       else{
 	//Find the veggie/extra and remove it
 	for(var i = 0; i < this[ingredient.type].length; i++) {
-	    if(this[ingredient.type][i] == ingredient.name) {
+	    if(this[ingredient.type][i].name == ingredient.name) {
 		this[ingredient.type].splice(i, 1);
 		break;
 	  }
