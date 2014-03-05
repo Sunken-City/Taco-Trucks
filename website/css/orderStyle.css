@@ -26,17 +26,9 @@
   background-color: red;
 }
 
-img
+#tacoPrice
 {
-  padding:8px;
-}
-
-img:hover
-{
-  border-style: ridge;
-  border-width: 8px;
-  border-color: #F0C73C;
-  padding: 0px;
+  clear: both;
 }
 
 .fixing
@@ -88,6 +80,22 @@ img:hover
   padding: 0px;
 }
 
+.currTaco
+{
+  margin-left: 5%;
+}
+
+.clearButton
+{
+  font-size: 1em;
+  color: #FF0000;
+  font-weight: bold; 
+  clear: both;
+  display: block;
+  text-align: center;
+  margin-bottom: 1.5%;
+}
+
 ul
 {
   float: left;
@@ -101,12 +109,15 @@ li
   position: absolute;
 }
 
-#tacoPrice
+img
 {
-  clear: both;
+  padding:8px;
 }
 
-.currTaco
+img:hover
 {
-  margin-left: 5%;
+  border-style: ridge;
+  border-width: 8px;
+  border-color: #F0C73C;
+  padding: 0px;
 }

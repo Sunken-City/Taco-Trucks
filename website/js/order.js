@@ -81,10 +81,21 @@ window.addEventListener('load', function(event) {
   });
   
   currTaco = new Taco();
+  
+  //Create the click listeners
   $(".quantity").on("spinstop", function(event, ui){
     currTaco.priceModifier = $(".quantity").spinner("value");
     currTaco.updatePrice(0);
   });
+  
+  $( "#clearVeggies" ).click(function() {
+    currTaco.clearVeggies();
+  });
+  
+  $( "#clearTaco" ).click(function() {
+    currTaco.clear();
+  });
+  
 });
 
 var createMenu = function (ingredient){
@@ -113,12 +124,13 @@ var createMenu = function (ingredient){
 	    currTaco.remove(lastIngredient);
 	  }
 	  //Move to next section.
+	  $('html, body').animate({
+	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active"))).offset().top
+	  }, 400);
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
 	}
 	$($this.children("img")[0]).addClass("selected");
-	/*$('html, body').animate({
-	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).offset().top
-      }, 400);*/
+	
 	currTaco.addToScreen(ingredient);
       }
       
@@ -215,6 +227,8 @@ function Taco() {
      this.remove(this.extras[i]);
    }
    $("#accordion").accordion("option", "active", 0);
+   this.price = 0;
+   this.updatePrice(0);
   }
   
   this.clearVeggies = function(){
