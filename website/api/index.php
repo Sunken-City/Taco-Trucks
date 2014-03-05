@@ -36,7 +36,40 @@ function getPreviousOrder()
     {
         $email = $_SESSION['email'];
 
-        // Justin's code here
+        $sql_orderItems = "SELECT orderItemId, quantity From orders INNER JOIN orderItem ON orders.orderId = orderItem.orderId INNER JOIN users ON orders.userID = users.userId WHERE users.email =:email AND orders.orderId = (SELECT orderId FROM orders ORDER BY orderDate DESC LIMIT 1)";
+
+	$sql_orderFixins = "SELECT name, price, heatRating FROM orders INNER JOIN orderItem ON orders.orderId = orderItem.orderId INNER JOIN orderItemDetails ON orderItem.orderItemId = orderItemDetails.orderItemId INNER JOIN fixins ON orderItemDetails.tacoFixinId = fixins.fixinId LEFT JOIN sauces ON fixins.fixinId = sauces.sauceId INNER JOIN users ON orders.userID = users.userId WHERE email=:email AND orderItem.orderItemId =:orderItem AND orders.orderId = (SELECT orderId FROM orders ORDER BY orderDate DESC LIMIT 1)";
+	
+	$order = array();
+
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql_orderItems);  
+		$stmt->bindParam("email", $email);
+		$stmt->execute();
+		$orderItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$s = "orderItemId";
+		$q = "quantity";
+		$i = 0;
+
+		foreach($orderItems as $key => $value) {
+			
+			$stmt = $db->prepare($sql_orderFixins);
+			$stmt->bindParam("email", $email);
+			$stmt->bindParam("orderItem", $value[$s]);
+			$stmt->execute();
+			$fixins = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			array_push($fixins, array($q => $value[$q]));
+			$order[$i++] = $fixins;
+			
+		}  
+
+		$db = null;
+		echo '{"order": ' . json_encode($order) . '}'; 
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
     }
 }
 
