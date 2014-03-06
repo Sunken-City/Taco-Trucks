@@ -127,7 +127,6 @@
     var menuItem = $("<div class=\"" + type + " ingredient\"></div>");
     menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\" price=\"" + price + "\">");
     menuItem.append("<span class=\"caption\">" + name + "</span>");
-    //menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
     menuItem.append("<span class=\"caption\">$" + price + "</span>");
     menuItem.click(function (event) {
       var $this = $(this);
@@ -326,11 +325,12 @@
     }
 
     this.updatePrice = function (change) {
-      if (!isNaN(change)) {
-        this.total += change;
-        $("#total").html("Total:$" + (this.total).toFixed(2));
+      var num = parseFloat(change);
+      if (!isNaN(num)) {
+        this.price += num;
+        $("#currentTaco .price").html("Price:$" + (this.price * this.quantity).toFixed(2));
       } else {
-        $("#total").html("Invalid Quantity!");
+        $("#currentTaco .price").html("Invalid Quantity!");
       }
     };
   };
