@@ -1,10 +1,40 @@
+
+  var geocoder;
+var map;
+//var addresses =["2012 Woodall Rodgers Fwy 75201 Dallas, Tx",'6425 Boaz Lane 75205 Dallas, Tx','Addison Circle 75001 Addison, Tx',' 5624 Sears St. 75206 Dallas, Tx','2630 Commerce St. 75226 Dallas, Tx'];
+var addresses=[];
+var locationNames=[];
+
+window.addEventListener('load', function(event) {
+
+  var url = "../api/locations";
+  var request = new XMLHttpRequest();
+  
+  request.open("GET", url, false);
+  request.send();
+
+  if(request.status === 200) {
+    console.log(request.responseText);
+    json = JSON.parse(request.responseText);
+    for(var i = 0; i < json.locations.length; i++){
+      var truckLocation = json.location[i].address +" " + json.location[i].zipcode + " " +  json.location[i].city + ", " + json.location[i].city;
+      locationName[i] = json.location[i].name;
+      address[i] = truckLocation;
+    }
+
+
+
+
+  }
+}
+
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
 // is probably because you have denied permission for location sharing.
 
-  var geocoder;
-var map;
-var addresses =["2012 Woodall Rodgers Fwy 75201 Dallas, Tx",'6425 Boaz Lane 75205 Dallas, Tx','Addison Circle 75001 Addison, Tx',' 5624 Sears St. 75206 Dallas, Tx','2630 Commerce St. 75226 Dallas, Tx'];
+//   var geocoder;
+// var map;
+// var addresses =["2012 Woodall Rodgers Fwy 75201 Dallas, Tx",'6425 Boaz Lane 75205 Dallas, Tx','Addison Circle 75001 Addison, Tx',' 5624 Sears St. 75206 Dallas, Tx','2630 Commerce St. 75226 Dallas, Tx'];
 
 
 function initialize() {
@@ -25,7 +55,8 @@ function initialize() {
           var marker = new google.maps.Marker({
               position: results[0].geometry.location,
               map: map, 
-              title: "The Taco Truck"
+              //title: "The Taco Truck"
+              title: locationName[i]
           }); 
           google.maps.event.addListener(marker, 'click', function() {
               infowindow.open(map,marker);
