@@ -229,8 +229,9 @@
     };
 
     this.updatePrice = function (change) {
-      if (!isNaN(change)) {
-        this.price += change;
+      var num = parseFloat(change);
+      if (!isNaN(num)) {
+        this.price += num;
         $("#currentTaco .price").html("Price:$" + (this.price * this.quantity).toFixed(2));
       } else {
         $("#currentTaco .price").html("Invalid Quantity!");
@@ -272,7 +273,7 @@
     this.init = function (type, name, price) {
       this.type = type;
       this.name = name;
-      this.price = price;
+      this.price = parseFloat(price);
     };
 
     this.type = "";
