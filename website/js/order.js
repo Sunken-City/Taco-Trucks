@@ -13,7 +13,6 @@ window.addEventListener('load', function(event) {
   request.send();
 
   if(request.status === 200) {
-    console.log(request.responseText);
     json = JSON.parse(request.responseText);
     
     for(var i = 0; i < json.menu.tortillas.length; i++){
