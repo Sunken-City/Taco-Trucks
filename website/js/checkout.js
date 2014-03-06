@@ -36,7 +36,8 @@ window.addEventListener('load', function(event) {
 // var map;
 // var addresses =["2012 Woodall Rodgers Fwy 75201 Dallas, Tx",'6425 Boaz Lane 75205 Dallas, Tx','Addison Circle 75001 Addison, Tx',' 5624 Sears St. 75206 Dallas, Tx','2630 Commerce St. 75226 Dallas, Tx'];
 
-var marker = [];
+var numberOfStores = address.length;
+var marker[numberOfStores];
 function initialize() {
       geocoder = new google.maps.Geocoder();
     var infowindow;
