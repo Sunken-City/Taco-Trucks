@@ -1,17 +1,19 @@
   
 var json;
 var currTaco;
+var cart;
+
 
 window.addEventListener('load', function(event) {
 
-  var url = "../taco_truck_menu.json";
+  var url = "../api/menu";
   var request = new XMLHttpRequest();
   
   request.open("GET", url, false);
   request.send();
 
   if(request.status === 200) {
-    //console.log(request.responseText);
+    console.log(request.responseText);
     json = JSON.parse(request.responseText);
     
     for(var i = 0; i < json.menu.tortillas.length; i++){
@@ -81,9 +83,44 @@ window.addEventListener('load', function(event) {
   });
   
   currTaco = new Taco();
+  cart = new Cart();
+  
+  //Create the click listeners
   $(".quantity").on("spinstop", function(event, ui){
-    currTaco.priceModifier = $(".quantity").spinner("value");
+    currTaco.quantity = $(".quantity").spinner("value");
     currTaco.updatePrice(0);
+  });
+  
+  $( "#clearVeggies" ).click(function() {
+    currTaco.clearVeggies();
+  });
+  
+  $("#clearExtras").click(function() {
+    currTaco.clearExtras();
+  });
+  
+  $("#clearTaco").click(function() {
+    currTaco.clear();
+  });
+  
+  $("#checkout").click(function() {
+    window.location.replace("checkout.php");
+  });
+  
+  $( "#addToCart" ).click(function() {
+    if ((currTaco["tortilla"] === "")||(currTaco["tortilla"] === undefined)){
+      moveTo(0);
+      $("#accordion").accordion("option", "active", 0);
+      $("#ui-accordion-accordion-header-0").addClass("fillMe");
+    }
+    else if ((currTaco["filling"] === "")||(currTaco["filling"] === undefined)){
+      moveTo(1);
+      $("#accordion").accordion("option", "active", 1);
+      $("#ui-accordion-accordion-header-1").addClass("fillMe");
+    }
+    else {
+      cart.add(currTaco);
+    }
   });
 });
 
@@ -95,7 +132,8 @@ var createMenu = function (ingredient){
   var menuItem = $("<div class=\"" + type + " ingredient\"></div>");
   menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\" price=\"" + price + "\">");
   menuItem.append("<span class=\"caption\">" + name + "</span>");
-  menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
+  //menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
+  menuItem.append("<span class=\"caption\">$" + price + "</span>");
   menuItem.click(function(event){
       var $this = $(this);
       //Deselect if selected
@@ -113,12 +151,12 @@ var createMenu = function (ingredient){
 	    currTaco.remove(lastIngredient);
 	  }
 	  //Move to next section.
+	  moveTo(($("#accordion").accordion("option", "active")));
 	  $("#accordion").accordion("option", "active", $("#accordion").accordion("option", "active") + 1);
 	}
 	$($this.children("img")[0]).addClass("selected");
-	/*$('html, body').animate({
-	  scrollTop: $("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).offset().top
-      }, 400);*/
+	$("#ui-accordion-accordion-header-" + ($("#accordion").accordion("option", "active") - 1)).removeClass("fillMe");
+	
 	currTaco.addToScreen(ingredient);
       }
       
@@ -126,8 +164,18 @@ var createMenu = function (ingredient){
   $("#" + type + "Menu").append(menuItem);
 };
 
+//Logical objects for the page.
+
 function Taco() {
   this.init = function(){
+    this.filling = "";
+    this.tortilla = "";
+    this.rice = "";
+    this.bean = "";
+    this.cheese = "";
+    this.sauce = "";
+    this.veggie = [];
+    this.extras = [];
   };
   
   this.filling = "";
@@ -138,9 +186,10 @@ function Taco() {
   this.sauce = "";
   this.veggie = [];
   this.extras = [];
-  this.quantity = 0;
   this.price = 0;
-  this.priceModifier = 1;
+  this.quantity = 1;
+  this.components = ["filling","tortilla","rice","bean","cheese","sauce"];
+  
   
   this.location = ".fixing"
   
@@ -178,7 +227,7 @@ function Taco() {
       else{
 	//Find the veggie/extra and remove it
 	for(var i = 0; i < this[ingredient.type].length; i++) {
-	    if(this[ingredient.type][i] == ingredient.name) {
+	    if(this[ingredient.type][i].name == ingredient.name) {
 		this[ingredient.type].splice(i, 1);
 		break;
 	  }
@@ -186,17 +235,17 @@ function Taco() {
       }
       this.updatePrice(-1 * ingredient.price);
     }
-  }
+  };
   
   this.updatePrice = function(change){
     if (!isNaN(change)){
       this.price += change;
-      $("#currentTaco .price").html("Price:$" + (this.price * this.priceModifier).toFixed(2) );
+      $("#currentTaco .price").html("Price:$" + (this.price * this.quantity).toFixed(2) );
     }
     else{
       $("#currentTaco .price").html("Invalid Quantity!");
     }
-  }
+  };
   
   this.clear = function(){
    $(".selected").removeClass("selected");
@@ -206,28 +255,32 @@ function Taco() {
    this.remove(this["bean"]);
    this.remove(this["cheese"]);
    this.remove(this["sauce"]);
-   for(var i = 0; i < this.veggie.length; i++)
-   {
-     this.remove(this.veggie[i]);
-   }
-   for(var i = 0; i < this.extras.length; i++)
-   {
-     this.remove(this.extras[i]);
-   }
+   this.clearVeggies();
+   this.clearExtras();
    $("#accordion").accordion("option", "active", 0);
+   moveTo(0);
+   this.price = 0;
+   this.updatePrice(0);
   }
   
   this.clearVeggies = function(){
    $(".selected.veggie").removeClass("selected");
-   for(var i = 0; i < this.veggie.length; i++)
+   for(var i = this.veggie.length - 1; i > -1 ; i--)
    {
      this.remove(this.veggie[i]);
    }
-  }
+  };
+  
+  this.clearExtras = function(){
+   $(".selected.extras").removeClass("selected");
+   for(var i = this.extras.length - 1; i > -1 ; i--)
+   {
+     this.remove(this.extras[i]);
+   }
+  };
 };
 
-function Ingredient()
-{
+function Ingredient() {
   this.init = function(type, name, price){
     this.type = type;
     this.name = name;
@@ -239,10 +292,77 @@ function Ingredient()
   this.price = 0;
 };
 
+function Cart() {
+  
+  this.items = [];
+  this.total = 0;
+  
+  this.add = function (taco) {
+    var cartTaco = ShallowCopy(taco);
+    cartTaco.location = ".cartTaco";
+    this.items.push(cartTaco);
+    this.print(cartTaco);
+    currTaco.clear();
+  };
+  
+  this.print = function(taco) {
+    var tacoItem = $("<ul class=\"cartTaco\"></ul>");
+    for (var i = 0; i < taco.components.length; i++) {
+      if (taco[taco.components[i]] !== undefined){
+	var name = taco[taco.components[i]].name;
+	if ((name !== undefined)&&(name !== "None")&&(name !== "No Sauce")) {
+	  var fixing = $("<li>" + name + "</li>");
+	  tacoItem.append(fixing);
+	}
+      }
+    }
+    for (var i = 0; i < taco["veggie"].length; i++) {
+      var name = taco["veggie"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
+	tacoItem.append(fixing);
+      }
+    }
+    for (var i = 0; i < taco["extras"].length; i++) {
+      var name = taco["extras"][i].name;
+      if ((name !== undefined)&&(name !== "None")) {
+	var fixing = $("<li>" + name + "</li>");
+	tacoItem.append(fixing);
+      }
+    }
+    tacoItem.append("<li><span class=\"button clearButton clearTaco\">Remove</span></li>");
+    $("#cartItems").append(tacoItem);
+    
+    this.updatePrice(taco.price * taco.quantity);
+  }
+  
+  this.updatePrice = function(change){
+    if (!isNaN(change)){
+      this.total += change;
+      $("#total").html("Total:$" + (this.total).toFixed(2) );
+    }
+    else{
+      $("#total").html("Invalid Quantity!");
+    }
+  };
+};
 
+//From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
+function ShallowCopy(o) {
+  var copy = Object.create(o);
+  for (prop in o) {
+    if (o.hasOwnProperty(prop)) {
+      copy[prop] = o[prop];
+    }
+  }
+  return copy;
+}
 
-
-
+function moveTo(headerNumber){
+  $('html, body').animate({
+    scrollTop: $("#ui-accordion-accordion-header-" + headerNumber).offset().top
+  }, 400); 
+}
 
 
 

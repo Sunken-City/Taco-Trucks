@@ -23,7 +23,7 @@
     
     <div id="previousOrder"></div>
     
-    <div id="currentTaco">
+    <div id="currentTaco" class="menu">
       <h3 class="currTaco">Current Taco:</h3>
       <ul class="tortilla fixing">Tortilla:</ul>
       <ul class="filling fixing">Filling:</ul>
@@ -33,17 +33,16 @@
       <ul class="sauce fixing">Sauce:</ul>
       <ul class="veggie fixing">Vegtables:</ul>
       <ul class="extras fixing">Extras:</ul>
+      <span class="button currTaco clearButton" id="clearVeggies">Clear Vegetables</span>
+      <span class="button currTaco clearButton" id="clearExtras">Clear Extras</span>
+      <span class="button currTaco clearButton" id="clearTaco">Clear Taco</span>
       <div class="price currTaco" id="tacoPrice">Price:$0.00</div>
       <label class="currTaco" for="quantity">Quantity</label>
       <input name="quantity" class="quantity" value="1"/>
-      <span class="button currTaco" id="addToCart">
-	<span class="buttonText">Add to Cart</span>
-      </span>
+      <span class="button currTaco" id="addToCart">Add to Cart</span>
     </div>
     
-    <span class="button" id="login">
-      <span class="buttonText">Login</span>
-    </span>
+    <span class="button" id="login">Login</span>
     
     <div id="accordion">
       <h3>Step 1: Choose your Tortilla</h3>
@@ -58,19 +57,18 @@
       <div id="cheeseMenu"></div>
       <h3>Step 6: Choose your Sauce</h3>
       <div id="sauceMenu"></div>
-      <h3>Step 7: Choose your Veggies</h3>
-      <div id="veggieMenu"></div>
-      <h3>Step 8: Choose your Extras</h3>
-      <div id="extrasMenu"></div>
+      <h3>Step 7: Choose any Veggies and Extras</h3>
+      <div id="choicesMenu">
+	<div id="veggieMenu"></div>
+	<div id="extrasMenu"></div>
+      </div>
     </div>
     
-    <div id="cart">
-      <h3>Cart:</h3>
+    <div id="cart" class="menu">
+      <h3 id="cartHeader">Cart:</h3>
       <div id="cartItems"></div>
-      <span id="total">Total:</span>
-      <span class="button" id="checkout">
-	<span class="buttonText">Checkout</span>
-      </span>
+      <h3 id="total">Total:$0.00</h3>
+      <span class="button" id="checkout">Checkout</span>
     </div>
     
     

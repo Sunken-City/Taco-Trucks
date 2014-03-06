@@ -1,0 +1,42 @@
+#map-canvas
+{
+    height: 50%;
+    width: 50%;
+    margin-left: 20%;
+    margin-right: 25%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+}
+
+
+#checkoutWindow
+{
+	position: relative;
+ 	width: 50%;
+    margin-left: 20%;
+    margin-right: 25%;
+    border-style: solid;
+    border-width: 5px;
+    border-bottom-width: 1px;
+    border-color: black;
+    text-align: center;
+}
+
+#order
+{
+	float:right;
+	width:50%;
+	text-align: center;
+}
+#payment
+{
+	width:50%;
+	text-align: center;
+}
+
+li
+{
+	list-style: none;
+	margin-left:-10%;
+}
