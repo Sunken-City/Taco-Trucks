@@ -12,7 +12,6 @@
 
 #cart
 {
-  background-color: green;
   overflow: auto;
 }
 
@@ -21,8 +20,9 @@
   top: 0;
   right: 0;
   position: fixed;
-  width: 25%;
+  width: 20%;
   background-color: red;
+  z-index: 1;
 }
 
 #tacoPrice
@@ -30,9 +30,22 @@
   clear: both;
 }
 
-#cartHeader
+#total
 {
-  margin: 0px;
+  clear: both;
+  display: block;
+  font-size: 1.5em;
+}
+
+.menu
+{
+  color:#FF6000;
+  text-shadow: 1px 1px 1px #000;
+  background-image: url('../resources/backgrounds/irongrip.png');
+  padding: 10px;
+  border-style: solid;
+  border-color: #111;
+  border-width: 3px;
 }
 
 .fixing
@@ -88,7 +101,7 @@
 {
   float:left;
   border-width: 2px;
-  border-color: #99B02D;
+  border-color: #FF4000;
   border-style: solid;
 }
 
@@ -124,11 +137,13 @@ ul.fixing
 ul.fixing li
 {
   position: absolute;
+  color:#FF4000;
 }
 
 ul.cartTaco
 {
-  padding: 0px;
+  padding: 10px;
+  margin: 5px;
   list-style: none;
 }
 
@@ -143,4 +158,11 @@ img:hover
   border-width: 8px;
   border-color: #F0C73C;
   padding: 0px;
+}
+
+h3
+{
+  color:#FF6000;
+  margin: 0px;
+  font-size:2.5em;
 }
