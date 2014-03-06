@@ -12,9 +12,8 @@
 
 #cart
 {
-  width: 10%;
-  height: 100%;
   background-color: green;
+  overflow: auto;
 }
 
 #currentTaco
@@ -29,6 +28,11 @@
 #tacoPrice
 {
   clear: both;
+}
+
+#cartHeader
+{
+  margin: 0px;
 }
 
 .fixing
@@ -80,6 +84,14 @@
   padding: 0px;
 }
 
+.cartTaco
+{
+  float:left;
+  border-width: 2px;
+  border-color: #99B02D;
+  border-style: solid;
+}
+
 .currTaco
 {
   margin-left: 5%;
@@ -112,6 +124,12 @@ ul.fixing
 ul.fixing li
 {
   position: absolute;
+}
+
+ul.cartTaco
+{
+  padding: 0px;
+  list-style: none;
 }
 
 img
