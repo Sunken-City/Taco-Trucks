@@ -16,6 +16,7 @@ $app->get('/logout', 'destroySession');
 $app->get('/locations', 'getLocations');
 $app->post('/users', 'createUser');
 $app->get('/orders', 'getPreviousOrder');
+$app->get('/users','getUserInfo');
 $app->get('/', function() use ($app)
 {
     $app->halt(404);
@@ -23,7 +24,36 @@ $app->get('/', function() use ($app)
 
 $app->run();
 
+function getUserInfo()
+{
+    //echo "HELLO";
+    getSession();
+    $app = \Slim\Slim::getInstance();
+    if(!validateSession('email'))
+	echo "no session";
+        //$app->halt(404);
+    else
+    {
+        $email = $_SESSION['email'];
+	$email = "BobbyDDickerson@armyspy.com";
 
+        $sql = "SELECT f_name, l_name, cc_provider, cc_number FROM users  
+        WHERE users.email =:email";
+
+    	try {
+    		$db = getConnection();
+    		$stmt = $db->prepare($sql);  
+    		$stmt->bindParam("email", $email);
+    		$stmt->execute();
+    		$userInfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    		$db = null;
+    		echo '{"info": ' . json_encode($userInfo) . '}'; 
+    	} catch(PDOException $e) {
+    		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    	}
+    }
+}
 
 function getPreviousOrder()
 {
