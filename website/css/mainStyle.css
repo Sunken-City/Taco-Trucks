@@ -8,6 +8,7 @@ h1,h2,h3,h4,h5,h6
 {
   font-family: 'Hammersmith One', sans-serif;
   text-shadow: 1px 1px 1px #000;
+  color: #00A480;
 }
 
 .button
@@ -26,6 +27,7 @@ h1,h2,h3,h4,h5,h6
   padding-left: 1em;
   padding-right: 1em;
   box-shadow: 3px 3px 3px #000;
+  cursor: pointer;
 }
 
 .button:hover
