@@ -6,14 +6,14 @@ var cart;
 
 window.addEventListener('load', function(event) {
 
-  var url = "../taco_truck_menu.json";
+  var url = "../api/menu";
   var request = new XMLHttpRequest();
   
   request.open("GET", url, false);
   request.send();
 
   if(request.status === 200) {
-    //console.log(request.responseText);
+    console.log(request.responseText);
     json = JSON.parse(request.responseText);
     
     for(var i = 0; i < json.menu.tortillas.length; i++){
@@ -132,7 +132,8 @@ var createMenu = function (ingredient){
   var menuItem = $("<div class=\"" + type + " ingredient\"></div>");
   menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\" price=\"" + price + "\">");
   menuItem.append("<span class=\"caption\">" + name + "</span>");
-  menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
+  //menuItem.append("<span class=\"caption\">$" + price.toFixed(2) + "</span>");
+  menuItem.append("<span class=\"caption\">$" + price + "</span>");
   menuItem.click(function(event){
       var $this = $(this);
       //Deselect if selected

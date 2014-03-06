@@ -180,7 +180,7 @@ function getMenu()
     $sql = "SELECT `name`, `price` FROM `fixins` INNER JOIN (`fixinClass`) ON 
     (`fixins`.`fixin_classId`=`fixinClass`.`fixin_classId`) 
     WHERE `class`=:item";
-    $sql_ex = "SELECT `name`, `price`, `heatRating` FROM `fixins` INNER JOIN 
+    $sql_ex = "SELECT `name`, `heatRating`, `price`  FROM `fixins` INNER JOIN 
     (`fixinClass`) ON (`fixinClass`.`fixin_classId`=`fixins`.`fixin_classId`)
     INNER JOIN (`sauces`) ON (`sauces`.`sauceId`=`fixins`.`fixinId`) 
     WHERE `fixinClass`.`class`=:item";
