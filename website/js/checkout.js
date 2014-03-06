@@ -36,7 +36,7 @@ window.addEventListener('load', function(event) {
 // var map;
 // var addresses =["2012 Woodall Rodgers Fwy 75201 Dallas, Tx",'6425 Boaz Lane 75205 Dallas, Tx','Addison Circle 75001 Addison, Tx',' 5624 Sears St. 75206 Dallas, Tx','2630 Commerce St. 75226 Dallas, Tx'];
 
-
+var marker = [];
 function initialize() {
       geocoder = new google.maps.Geocoder();
     var infowindow;
@@ -49,17 +49,17 @@ function initialize() {
         if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
         map.setCenter(results[0].geometry.location);
           infowindow = new google.maps.InfoWindow(
-              { content: '',
+              { content: address[i],
                 size: new google.maps.Size(150,50)
               });
-          var marker = new google.maps.Marker({
+            marker[i] = new google.maps.Marker({
               position: results[0].geometry.location,
               map: map, 
               //title: "The Taco Truck"
               title: locationName[i]
           }); 
           google.maps.event.addListener(marker, 'click', function() {
-              infowindow.open(map,marker);
+              infowindow.open(map,marker[i]);
           });
             countOfPlacesBeen ++;
         } else {
