@@ -19,6 +19,11 @@
     <script type="text/javascript" src = "js/checkout.js" ></script>
 </head>
 <body>
+    <div id="cart" class="menu">
+      <h3 id="cartHeader">Cart:</h3>
+      <div id="cartItems"></div>
+      <h3 id="total">Total:$0.00</h3>
+    </div>
 	<div id="checkoutWindow">
 		<h2>Checkout</h2>
 		<section id="order">
