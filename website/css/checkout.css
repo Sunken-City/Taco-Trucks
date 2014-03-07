@@ -12,8 +12,8 @@
 
 #checkoutWindow
 {
-	position: relative;
- 	width: 50%;
+    position: relative;
+    width: 50%;
     margin-left: 20%;
     margin-right: 25%;
     border-style: solid;
@@ -21,6 +21,11 @@
     border-bottom-width: 1px;
     border-color: black;
     text-align: center;
+}
+
+#paymentForm ul
+{
+    margin-left: 90px;
 }
 
 #order
@@ -39,4 +44,25 @@ li
 {
 	list-style: none;
 	margin-left:-10%;
+}
+
+.menu
+{
+    border: 1px solid orange;
+    height: 140px;
+    width: 60%;
+    margin-left: 88px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+
+.clearButton
+{
+  font-size: 1em;
+  color: #FF0000;
+  font-weight: bold; 
+  clear: both;
+  display: block;
+  text-align: center;
+  margin-bottom: 1.5%;
 }
