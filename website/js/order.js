@@ -336,17 +336,15 @@
       tacoItem.append(removeButton);
       $("#cartItems").append(tacoItem);
 
-      this.updatePrice(taco.price * taco.quantity);
+      this.updatePrice();
     };
 
     this.updatePrice = function (change) {
-      var num = parseFloat(change);
-      if (!isNaN(num)) {
-        this.price += num;
-        $("#total").html("Total:$" + (this.price).toFixed(2));
-      } else {
-        $("#total").html("Invalid Price!");
+      this.price = 0;
+      for (var i = 0; i < this.items.length; i++) {
+        this.price += (this.items[i].price * this.items[i].quantity);
       }
+      $("#total").html("Total:$" + (this.price).toFixed(2));
     };
   };
 
