@@ -101,6 +101,15 @@
       currTaco.clear();
     });
 
+    $("#lastOrderYes").click(function () {
+      //add last order to cart
+      $('#openLastOrderModal').hide();
+    });
+
+    $("#lastOrderNo").click(function () {
+      $('#openLastOrderModal').hide();
+    });
+
     $("#checkout").click(function () {
       $.ajax({
 	type: 'POST',
@@ -131,7 +140,7 @@
         cart.add(currTaco);
       }
     });
-  });
+  }); //this is the end of the load function, I think?
 
   var createMenu = function (ingredient) {
     var type = ingredient.type;
