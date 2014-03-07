@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "../taco_truck_menu.json"; //"../api/menu"
+    var url = "../api/menu"; //"../api/menu"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
