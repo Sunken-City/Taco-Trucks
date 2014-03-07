@@ -26,16 +26,13 @@ $app->run();
 
 function getUserInfo()
 {
-    //echo "HELLO";
     getSession();
     $app = \Slim\Slim::getInstance();
     if(!validateSession('email'))
-	echo "no session";
-        //$app->halt(404);
+        $app->halt(404);
     else
     {
         $email = $_SESSION['email'];
-	//$email = "BobbyDDickerson@armyspy.com";
 
         $sql = "SELECT f_name, l_name, cc_provider, cc_number FROM users  
         WHERE users.email =:email";
@@ -146,7 +143,7 @@ function authenticateUser()
 
     $app = \Slim\Slim::getInstance();
     $user;
-    $sql = "SELECT `pass` FROM `users` WHERE email=:email";
+    $sql = "SELECT `userId`, `pass` FROM `users` WHERE email=:email";
     $errors = false;
     $response;
 
@@ -193,6 +190,7 @@ function authenticateUser()
         {
             newSession(sha1(SALT.$user->email));
             $_SESSION['email'] = $user->email;
+            $_SESSION['userId'] = $row['userId'];
             $response['success'] = true;
             $response['message'] = "User logged in successfully";
         }
@@ -207,10 +205,10 @@ function getMenu()
     getSession();
 
     $app = \Slim\Slim::getInstance();
-    $sql = "SELECT `name`, `price` FROM `fixins` INNER JOIN (`fixinClass`) ON 
+    $sql = "SELECT `name`, `price`, `fixinId` FROM `fixins` INNER JOIN (`fixinClass`) ON 
     (`fixins`.`fixin_classId`=`fixinClass`.`fixin_classId`) 
     WHERE `class`=:item";
-    $sql_ex = "SELECT `name`, `heatRating`, `price`  FROM `fixins` INNER JOIN 
+    $sql_ex = "SELECT `name`, `heatRating`, `price`, `fixinId`  FROM `fixins` INNER JOIN 
     (`fixinClass`) ON (`fixinClass`.`fixin_classId`=`fixins`.`fixin_classId`)
     INNER JOIN (`sauces`) ON (`sauces`.`sauceId`=`fixins`.`fixinId`) 
     WHERE `fixinClass`.`class`=:item";
@@ -248,22 +246,6 @@ function getMenu()
 
     }
     echo '{"menu": '. json_encode($menu) . '}';
-}
-
-function getConnection()
-{
-    $dbhost = DB_HOST;
-    $dbname = DB_NAME;
-    $dbuser = DB_USER;
-    $dbpass = DB_PASS;
-
-    $dbset = "mysql:host=$dbhost;dbname=$dbname;";
-
-    $db = new PDO($dbset, $dbuser, $dbpass);
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    return $db;
 }
 
 function createUser()
@@ -327,4 +309,20 @@ function createUser()
     }
 
     echo json_encode($response);
+}
+
+function getConnection()
+{
+    $dbhost = DB_HOST;
+    $dbname = DB_NAME;
+    $dbuser = DB_USER;
+    $dbpass = DB_PASS;
+
+    $dbset = "mysql:host=$dbhost;dbname=$dbname;";
+
+    $db = new PDO($dbset, $dbuser, $dbpass);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    return $db;
 }
