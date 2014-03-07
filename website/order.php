@@ -19,7 +19,7 @@
   </head>
 
   <body>
-    <a href="#openLastOrderModal"><h1 id="title">Create A Taco</h1></a>
+    <h1 id="title">Create A Taco</h1>
     
     <div id="currentTaco" class="menu">
       <h3 class="currTaco">Current Taco:</h3>
@@ -43,6 +43,7 @@
     <div id="loginDiv">
       <?php include("loginModal.html"); ?>
     </div>
+    <a href="#openLastOrderModal">
     
     <div id="accordion">
       <h3>Step 1: Choose your Tortilla</h3>
