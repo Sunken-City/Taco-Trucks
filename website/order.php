@@ -76,8 +76,8 @@ require_once('../lib/session.php');
 getSession();
 if(validateSession('userId'))
 {
-
-?>   
+?>
+  <script src="/js/lastorder.js"></script>   
     <div id="openLastOrderModal" class="modalDialog">
       <div>
         <a href="#close" title="Close" class="close">X</a>
