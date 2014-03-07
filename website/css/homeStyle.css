@@ -36,7 +36,6 @@
   font-size: 4em;
   padding: 0px;
   color: #FF6000;  
-
 }
 
 #logo
@@ -49,46 +48,17 @@
 
 #loginDiv
 {
-float: right;
-margin-right: 10%;
+  float: right;
+  margin-right: 10%;
 }
 
 #createAccountDiv
 {
-
   float: left;
-
+  margin-left: 5%;
 }
 
-li
-{
-  padding: 4px;
-}
-input
-{
-  font-size: 20px;
-  width: 200px;
-  height: 30px;
-}
 .createAnAccount
 {
   margin-left: 35%;
-}
-.login
-{
-  margin-left: 43%;
-}
-.submit
-{
-  height: 30px;
-  margin-left: 7%;
-}
-#signIn
-{
-  margin-left: 19%;
-}
-
-#signUp
-{
-  margin-left: 19%;
 }
