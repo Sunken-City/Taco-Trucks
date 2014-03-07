@@ -11,7 +11,7 @@ var locationCounter = 0;
 window.addEventListener('load',
     function (event)
     {
-        var url = "../api/locations";
+        var url = "/api/locations";
         var request = new XMLHttpRequest();
         request.open("GET", url, false);
         request.send();
