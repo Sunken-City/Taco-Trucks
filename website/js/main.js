@@ -1,7 +1,7 @@
 window.addEventListener('load', function(event) {
     var createATacoButton = $('#createATaco');
     createATacoButton.click(function() {
-        window.location.replace("order.html");
+        window.location.replace("order.php");
     });
 
     var createAUser = $('#createAccount');
@@ -19,7 +19,7 @@ window.addEventListener('load', function(event) {
                 success: function(data) {
                     console.log(data);
                     if (data.success) {
-                        window.location.replace("order.html");
+                        window.location.replace("order.php");
                     } else {
                         alert(data.message);
                     }
@@ -43,7 +43,7 @@ window.addEventListener('load', function(event) {
             data: loginFormToJSON(),
             success: function(data) {
                 if (data.success) {
-                    window.location.replace("order.html");
+                    window.location.replace("order.php");
                 } else {
                     if (data.message !== undefined) {
                         alert("We don't have that email! Try creating " +

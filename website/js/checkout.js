@@ -314,7 +314,6 @@ function Cart() {
     cartTaco.location = ".cartTaco";
     this.items.push(cartTaco);
     this.print(cartTaco, this.items.length - 1);
-    currTaco.clear();
   };
 
   this.print = function (taco, tacoId) {
@@ -375,4 +374,26 @@ function Cart() {
     }
     $("#total").html("Total:$" + (this.price).toFixed(2));
   };
+  
+  this.purchase = function () {
+    var jsonable = [];
+    for (var i = 0; i < this.items.length; i++) {
+      
+    }
+  }
 };
+
+  function dbTaco() {
+    this.fixing = [];
+    this.quantity = 0;
+  };
+  //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
+  function ShallowCopy(o) {
+    var copy = Object.create(o);
+    for (prop in o) {
+      if (o.hasOwnProperty(prop)) {
+        copy[prop] = o[prop];
+      }
+    }
+    return copy;
+  };

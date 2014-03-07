@@ -21,8 +21,6 @@
   <body>
     <h1 id="title">Create A Taco</h1>
     
-    <div id="previousOrder"></div>
-    
     <div id="currentTaco" class="menu">
       <h3 class="currTaco">Current Taco:</h3>
       <ul class="tortilla fixing">Tortilla:</ul>
@@ -42,7 +40,9 @@
       <span class="button currTaco" id="addToCart">Add to Cart</span>
     </div>
     
-    <span class="button" id="login">Login</span>
+    <div id="loginDiv">
+      <?php include("loginModal.html"); ?>
+    </div>
     
     <div id="accordion">
       <h3>Step 1: Choose your Tortilla</h3>
