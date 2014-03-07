@@ -12,8 +12,8 @@
 
 #checkoutWindow
 {
-	position: relative;
- 	width: 50%;
+    position: relative;
+    width: 50%;
     margin-left: 20%;
     margin-right: 25%;
     border-style: solid;
@@ -49,9 +49,11 @@ li
 .menu
 {
     border: 1px solid orange;
-    height: 70px;
-    width: 50%;
+    height: 140px;
+    width: 60%;
     margin-left: 88px;
+    margin-top: -20px;
+    margin-bottom: -20px;
 }
 
 .clearButton
