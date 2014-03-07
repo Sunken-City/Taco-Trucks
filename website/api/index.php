@@ -19,12 +19,82 @@ $app->get('/orders', 'getPreviousOrder');
 $app->post('/cart', 'updateCart');
 $app->get('/cart', 'getCart');
 $app->get('/users','getUserInfo');
+$app->post('/orders/create','createOrder');
 $app->get('/', function() use ($app)
 {
     $app->halt(404);
 });
 
 $app->run();
+
+function createOrder()
+{
+	getSession();
+	$app = \Slim\Slim::getInstance();
+	$datetime = new DateTime(date("Y-m-d H:i:s"));
+	//print_r($datetime->format("Y-m-d H:i:s"));
+
+	$sql_insertOrder = "INSERT INTO orders (userId, orderDate, total) VALUES (:userId, :datetime, :total)";
+	$sql_insertOrderItem = "INSERT INTO orderItem (orderId, quantity) VALUES (:orderId, :quantity)";
+	$sql_insertOrderItemDetails = "INSERT INTO orderItemDetails (orderItemId, tacoFixinId) 
+					VALUES (:orderItemId, :tacoFixinId)";
+	
+
+	$total = 60;
+
+	/*if(!validateSession('email'))
+        	//$app->halt(404);
+		echo "no";
+	else
+	{*/
+		//$userId = $SESSION['userId'];
+		$userId = 4;
+
+		try {
+			$body = $app->request->getBody();
+       			$order = json_decode($body);
+			
+			/** ENTER ORDER need userId, date, and total */
+			
+			$date = $datetime->format("Y-m-d H:i:s");
+
+			$db = getConnection();
+			$stmt = $db->prepare($sql_insertOrder);
+			$stmt->bindParam("userId", $userId);
+			$stmt->bindParam("datetime", $date);
+			$stmt->bindParam("total", $total);
+			$stmt->execute();
+			$orderId = $db->lastInsertId();
+			print_r($orderId);
+			
+			/** ENTER ORDER ITEMS (TACOS) need quantity */
+			$tacoQuantityArray = array(1, 2, 4, 6, 3);
+			foreach($tacoQuantityArray as $quantity)
+			{
+				$stmt = $db->prepare($sql_insertOrderItem);
+				$stmt->bindParam("orderId", $orderId);
+				$stmt->bindParam("quantity", $quantity);
+				$stmt->execute();
+				$orderItemId = $db->lastInsertId();
+
+				/**ENTER FIXINS need tacoFixinId */
+				$tacoFixinArray = array(1, 23, 40, 33, 13);
+				foreach($tacoFixinArray as $tacoFixinId)
+				{
+					$stmt = $db->prepare($sql_insertOrderItemDetails);
+					$stmt->bindParam("orderItemId", $orderItemId);
+					$stmt->bindParam("tacoFixinId", $tacoFixinId);
+					$stmt->execute();
+				}
+			}
+			
+		} catch(PDOException $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}
+		
+		
+	/*}*/
+}	
 
 function getCart()
 {
