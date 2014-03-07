@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "../taco_truck_menu.json"; //"/api/menu"
+    var url = "/api/menu"; //"../taco_truck_menu.json"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
@@ -323,7 +323,7 @@
         }
       }
       
-      var quantityField = $("<label for=\"quantity\">Quantity:</label><input name=\"quantity\" class=\"quantity\" tacolink=\"" + tacoId + "\" value=\"1\"/>");
+      var quantityField = $("<label for=\"quantity\">Quantity:</label><input name=\"quantity\" class=\"quantity\" tacolink=\"" + tacoId + "\" value=\"" + cart.items[tacoId].quantity + "\"/>");
       quantityField.spinner({
 	min: 1,
 	max: 100,
