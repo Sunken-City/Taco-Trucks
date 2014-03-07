@@ -23,6 +23,11 @@
     text-align: center;
 }
 
+#paymentForm ul
+{
+    margin-left: 90px;
+}
+
 #order
 {
 	float:right;
@@ -39,4 +44,12 @@ li
 {
 	list-style: none;
 	margin-left:-10%;
+}
+
+.menu
+{
+    border: 1px solid orange;
+    height: 70px;
+    width: 50%;
+    margin-left: 88px;
 }

@@ -16,37 +16,41 @@
     <script type="text/javascript" src = "js/checkout.js" ></script>
 </head>
 <body>
-    <div id="cart" class="menu">
-      <h3 id="cartHeader">Cart:</h3>
-      <div id="cartItems"></div>
-      <h3 id="total">Total:$0.00</h3>
-    </div>
 	<div id="checkoutWindow">
 		<h2>Checkout</h2>
 		<section id="order">
-			<h3>Order</h3>
+            <h3 id="cartHeader">Cart:</h3>
+            <div id="cart" class="menu" style="overflow-y:scroll;">
+                <div id="cartItems"></div>
+            </div>
+            <h3 id="total">Total:$0.00</h3>
 		</section>
 		<section id="payment">
 			<h3>Payment Information</h3>
-			<form id="createAccount" action="reciept.html" method="post">
+			<form id="paymentForm" class="paymentForm" action="reciept.html" method="post">
         		<ul>
 	       			<li>
-	            		<input type="text" placeholder="First Name" id="firstName" name = "firstName"required/>
+	            		<input type="text" placeholder="First Name" id="firstName" name="firstName"required/>
 	        		</li>
 
 	        		<li>
-	            		<input type="text" placeholder="Last Name" id="lastName" name = "lastName"required/>
+	            		<input type="text" placeholder="Last Name" id="lastName" name="lastName"required/>
 			        </li>
 
-			        <li>
-			            <input type="text" placeholder="Credit Card Provider" id="CardProvider" name = "cardProvider" title = "Visa" required />
-			        </li>
+                    <li>
+                        <select form="paymentForm" id="CardProvider">
+                        <option value="Visa">Visa</option>
+                        <option value="MasterCard">MasterCard</option>
+                        <option value="American Express">American Express</option>
+                        <option value="Discover">Discover</option>
+                        </select>
+                    </li>
 
 			        <li>
-			            <input type="text" placeholder="Credit Card Number" id="creditCardNumber" name = "creditCardNumber" title="1234123412341234" pattern = "(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})" required />
+			            <input type="text" placeholder="Credit Card Number" id="creditCardNumber" name="creditCardNumber" pattern="(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})" required />
 			        </li>
         		</ul>
-           		<input type="submit" value="Pay" id="payment" class = "submit" />
+           		<input type="submit" value="Pay" id="payment" class="button" />
       		</form>
 
 
@@ -57,3 +61,8 @@
 
 </body>
 </html>
+<script type="text/javascript">
+$("#createAccount").submit(function(event){
+    alert("Submitting!");
+});
+</script>
