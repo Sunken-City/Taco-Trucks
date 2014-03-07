@@ -55,6 +55,7 @@ function updateCart()
     {
         $body = $app->request->getBody();
         $_SESSION['cart'] = $body;
+        echo json_encode("{'success': true}");
     }
     catch(Exception $e)
     {
