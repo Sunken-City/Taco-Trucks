@@ -32,29 +32,19 @@ function createOrder()
 	getSession();
 	$app = \Slim\Slim::getInstance();
 	$datetime = new DateTime(date("Y-m-d H:i:s"));
-	//print_r($datetime->format("Y-m-d H:i:s"));
 
 	$sql_insertOrder = "INSERT INTO orders (userId, orderDate, total) VALUES (:userId, :datetime, :total)";
 	$sql_insertOrderItem = "INSERT INTO orderItem (orderId, quantity) VALUES (:orderId, :quantity)";
 	$sql_insertOrderItemDetails = "INSERT INTO orderItemDetails (orderItemId, tacoFixinId) 
 					VALUES (:orderItemId, :tacoFixinId)";
-	
-	//echo "AHAHAHA";
-	
-	
 
 	if(!validateSession('email'))
 	{
-        	//$app->halt(404);
 		echo "no";
 	}
 	else
 	{
 		$userId = $_SESSION['userId'];
-		//echo "user";
-		//print_r($userId);
-		//echo "\n";
-		//$userId = 4;
 
 		try {
 			$body = $app->request->getBody();
