@@ -11,6 +11,7 @@ var cartdone;
 var address = [];
 var locationNames = [];
 var locationCounter = 0;
+
 window.addEventListener('load',
     function(event) {
         cart = new Cart();
@@ -406,14 +407,21 @@ function ShallowCopy(o) {
     return copy;
 }
 
-$("#payment").submit(function(event) {
-    $.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: '/api/orders',
-        dataType: "json",
-        data: cart.purchase(),
-        success: function(data) {},
-        error: function(data) {}
+$(document).ready(function() {
+    $("#paymentForm").submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/api/orders',
+            dataType: "json",
+            data: cart.purchase(),
+            success: function(data) {
+                window.location.replace("reciept.html");
+            },
+            error: function(data) {
+                window.location.replace("reciept.html");
+            }
+        });
     });
 });

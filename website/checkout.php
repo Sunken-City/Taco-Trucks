@@ -27,7 +27,7 @@
 		</section>
 		<section id="payment">
 			<h3>Payment Information</h3>
-			<form id="paymentForm" class="paymentForm" action="reciept.html" method="post">
+			<form id="paymentForm" class="paymentForm" action="">
         		<ul>
 	       			<li>
 	            		<input type="text" placeholder="First Name" id="firstName" name="firstName"required/>
@@ -61,8 +61,3 @@
 
 </body>
 </html>
-<script type="text/javascript">
-$("#createAccount").submit(function(event){
-    alert("Submitting!");
-});
-</script>

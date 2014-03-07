@@ -31,7 +31,7 @@ function createOrder()
 {
 	getSession();
 	$app = \Slim\Slim::getInstance();
-	$datetime = new DateTime(date("Y-m-d H:i:s"));
+	
 
 	$sql_insertOrder = "INSERT INTO orders (userId, orderDate, total) VALUES (:userId, :datetime, :total)";
 	$sql_insertOrderItem = "INSERT INTO orderItem (orderId, quantity) VALUES (:orderId, :quantity)";
@@ -64,8 +64,11 @@ function createOrder()
 			$total = $request->total;
 			
 			/** ENTER ORDER need userId, date, and total */
-
-			
+            if( ! ini_get('date.timezone') )
+            {
+               date_default_timezone_set('UTC');
+            } 
+			$datetime = new DateTime(date("Y-m-d H:i:s"));
 			$date = $datetime->format("Y-m-d H:i:s");
 
 			$db = getConnection();
