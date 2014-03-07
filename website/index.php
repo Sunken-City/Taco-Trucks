@@ -51,24 +51,12 @@
             <input type="text" placeholder="Credit Card Number" id="creditCardNumber" name="creditCardNumber" oninvalid="setCustomValidity('This is an invalid credit card!')" onchange="try{setCustomValidity('')}catch(e){}" pattern="(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})" required />
         </li>
           </ul>
-           <input type="submit" value="Sign Up" id="signUp" class="submit" />
+           <input type="submit" class="button" value="Sign Up" id="signUp" class="submit" />
       </form>
     </div>
 
-    <div id = "loginDiv">
-      <h2 class ="login">Login</h2>
-      <form id="login" action="index.html">
-        <ul>
-        <li>
-            <input type="email" placeholder="Email" id="loginEmail" name = "login_email"oninvalid="setCustomValidity('Please eneter a valid email address')" onchange="try{setCustomValidity('')}catch(e){}" title = "name@email.com" required/>
-        </li>
-
-        <li>
-            <input type="password" id="loginPassword" name="login_pass"  placeholder="Password" required/>
-        </li>
-          </ul>
-           <input type="submit" value="Sign In" id="signIn" class="submit" />
-      </div>
+    <div id="loginDiv">
+      <?php include("loginModal.html"); ?>
     </div>
 
     <div id="createATaco">

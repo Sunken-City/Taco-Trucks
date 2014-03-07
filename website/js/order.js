@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "../taco_truck_menu.json"; //"/api/menu"
+    var url = "../taco_truck_menu.json"; //"../taco_truck_menu.json"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
@@ -16,53 +16,53 @@
 
       for (var i = 0; i < json.menu.tortillas.length; i++) {
         var tortilla = new Ingredient();
-        tortilla.init("tortilla", json.menu.tortillas[i].name, json.menu.tortillas[i].price);
+        tortilla.init("tortilla", json.menu.tortillas[i].name, json.menu.tortillas[i].price, json.menu.tortillas[i].fixinId);
         createMenu(tortilla);
       }
       for (var i = 0; i < json.menu.type.length; i++) {
         var filling = new Ingredient();
-        filling.init("filling", json.menu.type[i].name, json.menu.type[i].price);
+        filling.init("filling", json.menu.type[i].name, json.menu.type[i].price, json.menu.type[i].fixinId);
         createMenu(filling);
       }
       for (var i = 0; i < json.menu.rice.length; i++) {
         var rice = new Ingredient();
-        rice.init("rice", json.menu.rice[i].name, json.menu.rice[i].price);
+        rice.init("rice", json.menu.rice[i].name, json.menu.rice[i].price, json.menu.rice[i].fixinId);
         createMenu(rice);
       }
       for (var i = 0; i < json.menu.beans.length; i++) {
         var bean = new Ingredient();
-        bean.init("bean", json.menu.beans[i].name, json.menu.beans[i].price);
+        bean.init("bean", json.menu.beans[i].name, json.menu.beans[i].price, json.menu.beans[i].fixinId);
         createMenu(bean);
       }
       for (var i = 0; i < json.menu.cheese.length; i++) {
         var cheese = new Ingredient();
-        cheese.init("cheese", json.menu.cheese[i].name, json.menu.cheese[i].price);
+        cheese.init("cheese", json.menu.cheese[i].name, json.menu.cheese[i].price, json.menu.cheese[i].fixinId);
         createMenu(cheese);
       }
       for (var i = 0; i < json.menu.sauces.length; i++) {
         var sauce = new Ingredient();
-        sauce.init("sauce", json.menu.sauces[i].name, json.menu.sauces[i].price);
+        sauce.init("sauce", json.menu.sauces[i].name, json.menu.sauces[i].price, json.menu.sauces[i].fixinId);
         createMenu(sauce);
       }
       for (var i = 0; i < json.menu.vegetables.length; i++) {
         var veggie = new Ingredient();
-        veggie.init("veggie", json.menu.vegetables[i].name, json.menu.vegetables[i].price);
+        veggie.init("veggie", json.menu.vegetables[i].name, json.menu.vegetables[i].price, json.menu.vegetables[i].fixinId);
         createMenu(veggie);
       }
       for (var i = json.menu.extras.length - 1; i > -1; i--) {
         var extras = new Ingredient();
-        extras.init("extras", json.menu.extras[i].name, json.menu.extras[i].price);
+        extras.init("extras", json.menu.extras[i].name, json.menu.extras[i].price, json.menu.extras[i].fixinId);
         createMenu(extras);
       }
       //Add the "None" option
       var none = new Ingredient();
-      none.init("rice", "None", 0);
+      none.init("rice", "None", 0, 0);
       createMenu(none);
       var none = new Ingredient();
-      none.init("bean", "None", 0);
+      none.init("bean", "None", 0, 0);
       createMenu(none);
       var none = new Ingredient();
-      none.init("cheese", "None", 0);
+      none.init("cheese", "None", 0, 0);
       createMenu(none);
     } else {
       console.log("HTTP request failed! Status Code: " + request.status);
@@ -73,6 +73,7 @@
       active: 0,
       heightStyle: "content"
     });
+    
     $(".quantity").spinner({
       min: 1,
       max: 100,
@@ -101,7 +102,20 @@
     });
 
     $("#checkout").click(function () {
-      window.location.replace("checkout.php");
+      $.ajax({
+	type: 'POST',
+	contentType: 'application/json',
+	url: '/api/cart',
+	dataType: "json",
+	data: JSON.stringify(cart.items),
+	success: function(data) {
+	  window.location.replace("checkout.php");
+	},
+	error: function(data) {
+	  alert('Start Crying');
+	}
+      });
+      
     });
 
     $("#addToCart").click(function () {
@@ -182,7 +196,6 @@
     this.price = 0;
     this.quantity = 1;
     this.components = ["filling", "tortilla", "rice", "bean", "cheese", "sauce"];
-    this.allIngredients = [];
 
 
     this.location = ".fixing"
@@ -200,7 +213,6 @@
           this[ingredient.type].push(ingredient);
         }
         this.updatePrice(ingredient.price);
-	this.allIngredients.push(ingredient);
       }
     }
 
@@ -227,12 +239,6 @@
           }
         }
         this.updatePrice(-1 * ingredient.price);
-	for (var i = 0; i < this.allIngredients.length; i++) {
-            if (this.allIngredients[i].name == ingredient.name) {
-              this.allIngredients.splice(i, 1);
-              break;
-            }
-	}
       }
     };
 
@@ -260,7 +266,6 @@
       moveTo(0);
       this.price = 0;
       this.updatePrice(0);
-      this.allIngredients = [];
     }
 
     this.clearVeggies = function () {
@@ -279,10 +284,11 @@
   };
 
   function Ingredient() {
-    this.init = function (type, name, price) {
+    this.init = function (type, name, price, fixinId) {
       this.type = type;
       this.name = name;
       this.price = parseFloat(price);
+      this.fixinId = fixinId;
     };
 
     this.type = "";
@@ -300,11 +306,11 @@
       var cartTaco = ShallowCopy(taco);
       cartTaco.location = ".cartTaco";
       this.items.push(cartTaco);
-      this.print(cartTaco);
+      this.print(cartTaco, this.items.length - 1);
       currTaco.clear();
     };
 
-    this.print = function (taco) {
+    this.print = function (taco, tacoId) {
       var tacoItem = $("<ul class=\"cartTaco\"></ul>");
       for (var i = 0; i < taco.components.length; i++) {
         if (taco[taco.components[i]] !== undefined) {
@@ -329,9 +335,25 @@
           tacoItem.append(fixing);
         }
       }
-      var removeButton = $("<li><span class=\"button clearButton clearTaco\">Remove</span></li>");
+      
+      var quantityField = $("<label for=\"quantity\">Quantity:</label><input name=\"quantity\" class=\"quantity\" tacolink=\"" + tacoId + "\" value=\"" + cart.items[tacoId].quantity + "\"/>");
+      quantityField.spinner({
+	min: 1,
+	max: 100,
+	showOn: 'both'
+      });
+      quantityField.on("spinstop", function (event, ui) {
+	cart.items[$(this).attr('tacolink')].quantity = $(this).spinner("value");
+	cart.updatePrice();
+      });
+      tacoItem.append(quantityField);
+      
+      
+      var removeButton = $("<li><span class=\"button clearButton clearTaco\" tacolink=\"" + tacoId + "\">Remove</span></li>");
       removeButton.click(function () {
+	cart.items.splice($(this).attr('tacolink'), 1);
 	$(this).parent().remove();
+	cart.updatePrice();
       });
       tacoItem.append(removeButton);
       $("#cartItems").append(tacoItem);
