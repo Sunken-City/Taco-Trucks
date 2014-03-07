@@ -17,9 +17,9 @@
 
   <body>
     <h1 id="title">The Taco Truck</h1>
-    <img src="resources/img/taco_truck_logo.png" alt="Marfle Bark" id="logo">
+    <img src="resources/img/taco_truck_logo.png" alt="Marfle Bark" title="Marfle Bark" id="logo">
     
-    <div id = "createAccountDiv">
+    <div id="createAccountDiv">
       <?php include("accountCreateModal.html"); ?>
     </div>
 
@@ -28,7 +28,7 @@
     </div>
 
     <div id="createATaco">
-      <h2 class="buttonText">Create a Taco</h2>
+      <h2 class="button buttonText">Create a Taco</h2>
     </div>
     
   </body>
