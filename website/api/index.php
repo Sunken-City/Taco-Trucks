@@ -32,39 +32,39 @@ function createOrder()
 	getSession();
 	$app = \Slim\Slim::getInstance();
 	$datetime = new DateTime(date("Y-m-d H:i:s"));
-	//print_r($datetime->format("Y-m-d H:i:s"));
 
 	$sql_insertOrder = "INSERT INTO orders (userId, orderDate, total) VALUES (:userId, :datetime, :total)";
 	$sql_insertOrderItem = "INSERT INTO orderItem (orderId, quantity) VALUES (:orderId, :quantity)";
 	$sql_insertOrderItemDetails = "INSERT INTO orderItemDetails (orderItemId, tacoFixinId) 
 					VALUES (:orderItemId, :tacoFixinId)";
-	
-
-	
 
 	if(!validateSession('email'))
-        	//$app->halt(404);
+	{
 		echo "no";
+	}
 	else
 	{
-		//$userId = $SESSION['userId'];
-		$userId = 4;
+		$userId = $_SESSION['userId'];
 
 		try {
 			$body = $app->request->getBody();
-       			$order = json_decode($body);
+       			$request = json_decode($body);
+			
+			$order = $request->tacos;
 
-			$tacoQuantityArray = array();
-			$tacoFixinArray = array();
+			$tacoQuantityArray;
+			$tacoFixinArray;
 			$i = 0;
 			while(isset($order[$i]))
 			{
-				array_push($tacoFixinArray, $order[$i].fixins);
-				array_push($tacoQuantityArray, $order[$i].quantity);
+				$tacoFixinArray[] = $order[$i]->fixins;
+				$tacoQuantityArray[] = $order[$i]->quantity;
+				$i++;
 			}
-			$total = $order.total;
+			$total = $request->total;
 			
 			/** ENTER ORDER need userId, date, and total */
+
 			
 			$date = $datetime->format("Y-m-d H:i:s");
 
@@ -75,10 +75,10 @@ function createOrder()
 			$stmt->bindParam("total", $total);
 			$stmt->execute();
 			$orderId = $db->lastInsertId();
-			print_r($orderId);
+			//print_r($orderId);
 			
 			/** ENTER ORDER ITEMS (TACOS) need quantity */
-			foreach($tacoQuantityArray as $quantity)
+			foreach($tacoQuantityArray as $taco => $quantity)
 			{
 				$stmt = $db->prepare($sql_insertOrderItem);
 				$stmt->bindParam("orderId", $orderId);
@@ -88,17 +88,22 @@ function createOrder()
 
 				/**ENTER FIXINS need tacoFixinId */
 				
-				foreach($tacoFixinArray as $tacoFixinId)
+				foreach($tacoFixinArray as $taco => $tacoFixinIds)
 				{
-					$stmt = $db->prepare($sql_insertOrderItemDetails);
-					$stmt->bindParam("orderItemId", $orderItemId);
-					$stmt->bindParam("tacoFixinId", $tacoFixinId);
-					$stmt->execute();
+					foreach($tacoFixinIds as $key => $tacoFixinId)
+					{
+						$stmt = $db->prepare($sql_insertOrderItemDetails);
+						$stmt->bindParam("orderItemId", $orderItemId);
+						$stmt->bindParam("tacoFixinId", $tacoFixinId);
+						$stmt->execute();
+					}
 				}
 			}
 			
 		} catch(PDOException $e) {
 			echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}catch(Exception $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
 		}
 		
 		
