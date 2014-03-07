@@ -55,7 +55,9 @@ window.addEventListener('load',
         if (request.status === 200) {
             cartson = JSON.parse(request.responseText);
             console.log(cartson);
-            cart.add(cartson[0]);
+            for (var taco in cartson) {
+                cart.add(cartson[taco]);
+            }
         }
         // cartson = JSON.parse("[{\"filling\":{\"type\":\"filling\",\"name\":\"Chicken\",\"price\":0.75,\"fixinId\":2},\"tortilla\":{\"type\":\"tortilla\",\"name\":\"Cayenne\",\"price\":0.35,\"fixinId\":6},\"rice\":{\"type\":\"rice\",\"name\":\"Spanish Rice\",\"price\":0.25,\"fixinId\":10},\"bean\":{\"type\":\"bean\",\"name\":\"Whole Pinto Beans\",\"price\":0.25,\"fixinId\":15},\"cheese\":{\"type\":\"cheese\",\"name\":\"Cheddar/Jack Mix\",\"price\":0.35,\"fixinId\":12},\"sauce\":{\"type\":\"sauce\",\"name\":\"Death\",\"price\":0,\"fixinId\":18},\"veggie\":[],\"extras\":[],\"price\":4.95,\"quantity\":5,\"components\":[\"filling\",\"tortilla\",\"rice\",\"bean\",\"cheese\",\"sauce\"],\"location\":\".cartTaco\"},{\"filling\":{\"type\":\"filling\",\"name\":\"Carnitas\",\"price\":1,\"fixinId\":3},\"tortilla\":{\"type\":\"tortilla\",\"name\":\"Flour\",\"price\":0.25,\"fixinId\":5},\"rice\":{\"type\":\"rice\",\"name\":\"Spanish Rice\",\"price\":0.25,\"fixinId\":10},\"bean\":{\"type\":\"bean\",\"name\":\"None\",\"price\":0,\"fixinId\":0},\"cheese\":{\"type\":\"cheese\",\"name\":\"None\",\"price\":0,\"fixinId\":0},\"sauce\":{\"type\":\"sauce\",\"name\":\"No Sauce\",\"price\":0,\"fixinId\":23},\"veggie\":[],\"extras\":[],\"price\":1.5,\"quantity\":5,\"components\":[\"filling\",\"tortilla\",\"rice\",\"bean\",\"cheese\",\"sauce\"],\"location\":\".cartTaco\"}]");
     });
@@ -379,14 +381,18 @@ function Cart() {
     };
 
     this.purchase = function() {
-        var jsonable = [];
+        var jsonable = {};
+        var tacos = [];
         for (var i = 0; i < this.items.length; i++) {
             var dbTaco = {};
             dbTaco.fixins = this.items[i].fixins;
             dbTaco.quantity = this.items[i].quantity;
-            jsonable.push(dbTaco);
+            tacos.push(dbTaco);
         }
+        jsonable.tacos = tacos;
+        jsonable.total = this.price;
         cartdone = JSON.stringify(jsonable);
+        return cartdone;
     };
 }
 //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
@@ -399,3 +405,15 @@ function ShallowCopy(o) {
     }
     return copy;
 }
+
+$("#payment").submit(function(event) {
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/api/orders',
+        dataType: "json",
+        data: cart.purchase(),
+        success: function(data) {},
+        error: function(data) {}
+    });
+});
