@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "../api/menu";
+    var url = "../api/menu"; //"../api/menu"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
@@ -99,6 +99,10 @@
     $("#clearTaco").click(function () {
       currTaco.clear();
     });
+    
+    $(".clearTaco").click(function () {
+      this.parent().parent()[0].remove();
+    });
 
     $("#checkout").click(function () {
       window.location.replace("checkout.php");
@@ -127,7 +131,7 @@
     var menuItem = $("<div class=\"" + type + " ingredient\"></div>");
     menuItem.append("<img src=\"resources/img/" + name + ".png\" alt=\"" + name + "\" class=\"ingredient " + type + "\" price=\"" + price + "\">");
     menuItem.append("<span class=\"caption\">" + name + "</span>");
-    menuItem.append("<span class=\"caption\">$" + price + "</span>");
+    menuItem.append("<span class=\"caption\">$" + parseFloat(price).toFixed(2) + "</span>");
     menuItem.click(function (event) {
       var $this = $(this);
       //Deselect if selected
@@ -182,6 +186,7 @@
     this.price = 0;
     this.quantity = 1;
     this.components = ["filling", "tortilla", "rice", "bean", "cheese", "sauce"];
+    this.allIngredients = [];
 
 
     this.location = ".fixing"
@@ -199,6 +204,7 @@
           this[ingredient.type].push(ingredient);
         }
         this.updatePrice(ingredient.price);
+	this.allIngredients.push(ingredient);
       }
     }
 
@@ -225,6 +231,12 @@
           }
         }
         this.updatePrice(-1 * ingredient.price);
+	for (var i = 0; i < this.allIngredients.length; i++) {
+            if (this.allIngredients[i].name == ingredient.name) {
+              this.allIngredients.splice(i, 1);
+              break;
+            }
+	}
       }
     };
 
@@ -252,6 +264,7 @@
       moveTo(0);
       this.price = 0;
       this.updatePrice(0);
+      this.allIngredients = [];
     }
 
     this.clearVeggies = function () {
@@ -323,7 +336,7 @@
       $("#cartItems").append(tacoItem);
 
       this.updatePrice(taco.price * taco.quantity);
-    }
+    };
 
     this.updatePrice = function (change) {
       var num = parseFloat(change);
@@ -345,10 +358,10 @@
       }
     }
     return copy;
-  }
+  };
 
   function moveTo(headerNumber) {
     $('html, body').animate({
       scrollTop: $("#ui-accordion-accordion-header-" + headerNumber).offset().top
     }, 400);
-  }
+  };
