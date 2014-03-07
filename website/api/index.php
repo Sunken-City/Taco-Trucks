@@ -19,7 +19,7 @@ $app->get('/orders', 'getPreviousOrder');
 $app->post('/cart', 'updateCart');
 $app->get('/cart', 'getCart');
 $app->get('/users','getUserInfo');
-$app->post('/orders/create','createOrder');
+$app->post('/orders','createOrder');
 $app->get('/', function() use ($app)
 {
     $app->halt(404);
@@ -40,19 +40,29 @@ function createOrder()
 					VALUES (:orderItemId, :tacoFixinId)";
 	
 
-	$total = 60;
+	
 
-	/*if(!validateSession('email'))
+	if(!validateSession('email'))
         	//$app->halt(404);
 		echo "no";
 	else
-	{*/
+	{
 		//$userId = $SESSION['userId'];
 		$userId = 4;
 
 		try {
 			$body = $app->request->getBody();
        			$order = json_decode($body);
+
+			$tacoQuantityArray = array();
+			$tacoFixinArray = array();
+			$i = 0;
+			while(isset($order[$i]))
+			{
+				array_push($tacoFixinArray, $order[$i].fixins);
+				array_push($tacoQuantityArray, $order[$i].quantity);
+			}
+			$total = $order.total;
 			
 			/** ENTER ORDER need userId, date, and total */
 			
@@ -68,7 +78,6 @@ function createOrder()
 			print_r($orderId);
 			
 			/** ENTER ORDER ITEMS (TACOS) need quantity */
-			$tacoQuantityArray = array(1, 2, 4, 6, 3);
 			foreach($tacoQuantityArray as $quantity)
 			{
 				$stmt = $db->prepare($sql_insertOrderItem);
@@ -78,7 +87,7 @@ function createOrder()
 				$orderItemId = $db->lastInsertId();
 
 				/**ENTER FIXINS need tacoFixinId */
-				$tacoFixinArray = array(1, 23, 40, 33, 13);
+				
 				foreach($tacoFixinArray as $tacoFixinId)
 				{
 					$stmt = $db->prepare($sql_insertOrderItemDetails);
@@ -93,7 +102,7 @@ function createOrder()
 		}
 		
 		
-	/*}*/
+	}
 }	
 
 function getCart()
