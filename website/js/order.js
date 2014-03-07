@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "../api/menu"; //"../api/menu"
+    var url = "../taco_truck_menu.json"; //"../api/menu"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
@@ -98,10 +98,6 @@
 
     $("#clearTaco").click(function () {
       currTaco.clear();
-    });
-    
-    $(".clearTaco").click(function () {
-      this.parent().parent()[0].remove();
     });
 
     $("#checkout").click(function () {
@@ -332,8 +328,14 @@
           tacoItem.append(fixing);
         }
       }
-      tacoItem.append("<li><span class=\"button clearButton clearTaco\">Remove</span></li>");
+      var removeButton = $("<li><span class=\"button clearButton clearTaco\">Remove</span></li>");
+      removeButton.click(function () {
+	$(this).parent().remove();
+      });
+      tacoItem.append(removeButton);
       $("#cartItems").append(tacoItem);
+
+
 
       this.updatePrice(taco.price * taco.quantity);
     };
