@@ -17,11 +17,15 @@ window.addEventListener('load', function(event) {
                 dataType: "json",
                 data: signUpFormToJSON(),
                 success: function(data) {
+                    console.log(data);
                     if (data.success) {
                         window.location.replace("order.html");
+                    } else {
+                        alert(data.message);
                     }
                 },
                 error: function(data) {
+                    console.log(data);
                     alert('Errors occured during your request.');
                 }
             });
@@ -99,7 +103,6 @@ function signUpFormToJSON() {
 
 function validateForm(form, checks) {
     for (var key in checks) {
-        console.log(key);
         /* 
         assumes 
         form

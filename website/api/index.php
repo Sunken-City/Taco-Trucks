@@ -393,12 +393,12 @@ function createUser()
                 ':cc_n' => $user->cc_n
             );
             $stmt->execute($params);
-            $row = fetch(PDO::FETCH_ASSOC);
+            $id = $db->lastInsertId();
             $response['success'] = true;
             $response['message'] = "User created";
             newSession(sha1(SALT.$user->email));
             $_SESSION['email'] = $user->email;
-            $_SESSION['userId'] = $row['userId'];
+            $_SESSION['userId'] = $id;
         }
         else
         {
