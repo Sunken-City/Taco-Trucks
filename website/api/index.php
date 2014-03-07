@@ -35,7 +35,7 @@ function getUserInfo()
     else
     {
         $email = $_SESSION['email'];
-	$email = "BobbyDDickerson@armyspy.com";
+	//$email = "BobbyDDickerson@armyspy.com";
 
         $sql = "SELECT f_name, l_name, cc_provider, cc_number FROM users  
         WHERE users.email =:email";

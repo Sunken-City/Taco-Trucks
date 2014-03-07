@@ -34,6 +34,19 @@ window.addEventListener('load',
                 address[i] = truckLocation;
             }
         }
+	url = "../api/users";
+        request = new XMLHttpRequest();
+        request.open("GET", url, false);
+        request.send();
+        if(request.status === 200)
+        {
+            json = JSON.parse(request.responseText);
+            //console.log(json.info[0].f_name); 
+            $("#firstName").val(json.info[0].f_name);
+            $("#lastName").val(json.info[0].l_name);
+            $("#CardProvider").val(json.info[0].cc_provider);
+            $("#creditCardNumber").val(json.info[0].cc_number);
+        }
     });
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
