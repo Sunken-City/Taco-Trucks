@@ -81,15 +81,14 @@ if(validateSession('userId'))
     <div id="openLastOrderModal" class="modalDialog">
       <div>
         <a href="#close" title="Close" class="close">X</a>
-        <h2>Welcome Back, $NAME!</h2>
-        <p>Would you like to add your<br>
-          previous order to the cart?</p>
+        <h2>Welcome Back!</h2>
+        <p>Would you like to add your previous order to the cart?</p>
         <form id="lastOrder" action="">
           <ul>
-            <li>
+            <li class="sidebyside">
               <input type="button" value="Yes" id="lastOrderYes" class="submit button modal-button"/>
             </li>
-            <li>
+            <li class="sidebyside">
               <input type="button" value="No" id="lastOrderNo" class="submit button modal-button"/>
             </li>
           </ul>
