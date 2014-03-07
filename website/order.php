@@ -71,26 +71,32 @@
       <span class="button" id="checkout">Checkout</span>
     </div>
     
+<?php
+require_once('../lib/session.php');
+getSession();
+if(validateSession('userId'))
+{
+?>   
     <div id="openLastOrderModal" class="modalDialog">
       <div>
         <a href="#close" title="Close" class="close">X</a>
         <h2>Welcome Back, $NAME!</h2>
         <p>Would you like to add your<br>
           previous order to the cart?</p>
-          <form id="lastOrder" action="">
-            <ul>
-              <li>
-                <input type="button" value="Yes" id="lastOrderYes" class="submit button modal-button"/>
-              </li>
-              <li>
-                <input type="button" value="No" id="lastOrderNo" class="submit button modal-button"/>
-              </li>
-            </ul>
-          </form>
-        </div>
+        <form id="lastOrder" action="">
+          <ul>
+            <li>
+              <input type="button" value="Yes" id="lastOrderYes" class="submit button modal-button"/>
+            </li>
+            <li>
+              <input type="button" value="No" id="lastOrderNo" class="submit button modal-button"/>
+            </li>
+          </ul>
+        </form>
       </div>
-
-    
+    </div>
+<?php
+}
+?>    
   </body>
-
 </html>
