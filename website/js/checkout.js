@@ -12,10 +12,25 @@ var address = [];
 var locationNames = [];
 var locationCounter = 0;
 
+function populatePaymentForm() {
+    url = "/api/users";
+    request = new XMLHttpRequest();
+    request.open("GET", url, false);
+    request.send();
+    if (request.status === 200) {
+        json = JSON.parse(request.responseText);
+        //console.log(json.info[0].f_name); 
+        $("#firstName").val(json.info[0].f_name);
+        $("#lastName").val(json.info[0].l_name);
+        $("#CardProvider").val(json.info[0].cc_provider);
+        $("#creditCardNumber").val(json.info[0].cc_number);
+    }
+}
+
 window.addEventListener('load',
     function(event) {
         cart = new Cart();
-        var url = "../api/locations";
+        var url = "/api/locations";
         var request = new XMLHttpRequest();
         request.open("GET", url, false);
         request.send();
@@ -36,18 +51,8 @@ window.addEventListener('load',
                 address[i] = truckLocation;
             }
         }
-        url = "../api/users";
-        request = new XMLHttpRequest();
-        request.open("GET", url, false);
-        request.send();
-        if (request.status === 200) {
-            json = JSON.parse(request.responseText);
-            //console.log(json.info[0].f_name); 
-            $("#firstName").val(json.info[0].f_name);
-            $("#lastName").val(json.info[0].l_name);
-            $("#CardProvider").val(json.info[0].cc_provider);
-            $("#creditCardNumber").val(json.info[0].cc_number);
-        }
+
+        populatePaymentForm();
 
         url = "/api/cart";
         request = new XMLHttpRequest();
@@ -424,4 +429,40 @@ $(document).ready(function() {
             }
         });
     });
+    $("#login").submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/api/login',
+            dataType: "json",
+            data: loginFormToJSON(),
+            success: function(data) {
+                if (data.success) {
+                    populatePaymentForm();
+                    window.location.replace("#close");
+                } else {
+                    if (data.message !== undefined) {
+                        alert("Login failed");
+                    } else {
+                        alert("Login failed");
+                        $('#loginPassword').val('');
+                    }
+                }
+            },
+            error: function(data) {
+                alert('Errors occured during your request :(');
+                $('#loginPassword').val('');
+            }
+        });
+    });
+
+    function loginFormToJSON() {
+        console.log($('#loginEmail').val());
+        console.log($('#loginPassword').val());
+        return JSON.stringify({
+            "email": $('#loginEmail').val(),
+            "password": $('#loginPassword').val()
+        });
+    }
 });

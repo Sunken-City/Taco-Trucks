@@ -16,6 +16,9 @@
     <script type="text/javascript" src = "js/checkout.js" ></script>
 </head>
 <body>
+    <div id="loginDiv">
+      <?php include("loginModal.html"); ?>
+    </div>
 	<div id="checkoutWindow">
 		<h2>Checkout</h2>
 		<section id="order">

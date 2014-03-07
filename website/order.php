@@ -41,9 +41,21 @@
     </div>
     
     <div id="loginDiv">
-      <?php include("loginModal.html"); ?>
+      <?php
+      require_once('../lib/session.php');
+      getSession();
+      include("loginModal.html"); 
+      
+      if(validateSession('userId'))
+      {
+      ?>
+      <a href="#openLastOrderModal"><input type="button" class="button" value="Use Previous Order"/></a
+      <?php
+      }
+      ?>
     </div>
-    <a href="#openLastOrderModal">
+
+    
     
     <div id="accordion">
       <h3>Step 1: Choose your Tortilla</h3>
@@ -73,12 +85,11 @@
     </div>
     
 <?php
-require_once('../lib/session.php');
-getSession();
+
+
 if(validateSession('userId'))
 {
-?>
-  <script src="/js/lastorder.js"></script>   
+?>   
     <div id="openLastOrderModal" class="modalDialog">
       <div>
         <a href="#close" title="Close" class="close">X</a>
@@ -96,6 +107,7 @@ if(validateSession('userId'))
         </form>
       </div>
     </div>
+    <script src="/js/lastorder.js"></script>
 <?php
 }
 ?>    

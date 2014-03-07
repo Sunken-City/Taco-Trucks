@@ -2,6 +2,9 @@
   var currTaco;
   var cart;
 
+  currTaco = new Taco();
+  cart = new Cart();
+
   $(document).ready(function() {
       $("#login").submit(function(event) {
           event.preventDefault();
@@ -122,6 +125,7 @@
       currTaco = new Taco();
       cart = new Cart();
 
+
       //Create the click listeners
       $(".quantity").on("spinstop", function(event, ui) {
           currTaco.quantity = $(".quantity").spinner("value");
@@ -138,15 +142,6 @@
 
       $("#clearTaco").click(function() {
           currTaco.clear();
-      });
-
-      $("#lastOrderYes").click(function() {
-          //add last order to cart
-          $('#openLastOrderModal').hide();
-      });
-
-      $("#lastOrderNo").click(function() {
-          $('#openLastOrderModal').hide();
       });
 
       $("#checkout").click(function() {
@@ -246,12 +241,12 @@
       this.components = ["filling", "tortilla", "rice", "bean", "cheese", "sauce"];
 
 
-      this.location = ".fixing"
+      this.location = ".fixing";
 
       this.addToScreen = function(ingredient) {
           this.add(ingredient);
           this.print(ingredient);
-      }
+      };
 
       this.add = function(ingredient) {
           if (ingredient !== undefined) {
@@ -262,7 +257,7 @@
               }
               this.updatePrice(ingredient.price);
           }
-      }
+      };
 
       this.print = function(ingredient) {
           if (ingredient !== undefined) {
@@ -314,7 +309,7 @@
           moveTo(0);
           this.price = 0;
           this.updatePrice(0);
-      }
+      };
 
       this.clearVeggies = function() {
           $(".selected.veggie").removeClass("selected");
@@ -329,7 +324,7 @@
               this.remove(this.extras[i]);
           }
       };
-  };
+  }
 
   function Ingredient() {
       this.init = function(type, name, price, fixinId) {
@@ -342,7 +337,7 @@
       this.type = "";
       this.name = "";
       this.price = 0;
-  };
+  }
 
   function Cart() {
 
@@ -416,7 +411,7 @@
           }
           $("#total").html("Total:$" + (this.price).toFixed(2));
       };
-  };
+  }
 
    //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
   function ShallowCopy(o) {
@@ -427,10 +422,10 @@
           }
       }
       return copy;
-  };
+  }
 
   function moveTo(headerNumber) {
       $('html, body').animate({
           scrollTop: $("#ui-accordion-accordion-header-" + headerNumber).offset().top
       }, 400);
-  };
+  }

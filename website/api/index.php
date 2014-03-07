@@ -201,11 +201,12 @@ function getPreviousOrder()
             ORDER BY orderDate DESC LIMIT 1
             )";
 
-        $sql_orderFixins = "SELECT name, price, heatRating, fixinId FROM orders 
+        $sql_orderFixins = "SELECT name, price, heatRating, class AS type, fixinId FROM orders 
         INNER JOIN orderItem ON orders.orderId = orderItem.orderId 
         INNER JOIN orderItemDetails 
         ON orderItem.orderItemId = orderItemDetails.orderItemId 
-        INNER JOIN fixins ON orderItemDetails.tacoFixinId = fixins.fixinId 
+        INNER JOIN fixins ON orderItemDetails.tacoFixinId = fixins.fixinId
+        INNER JOIN fixinClass ON fixins.fixin_classId = fixinClass.fixin_classId
         LEFT JOIN sauces ON fixins.fixinId = sauces.sauceId
         WHERE orderItemDetails.orderItemId=:orderItemId";
 	
