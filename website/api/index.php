@@ -181,23 +181,25 @@ function getPreviousOrder()
     {
         $email = $_SESSION['email'];
 
-        $sql_orderItems = "SELECT orderItemId, quantity From orders 
-        INNER JOIN orderItem ON orders.orderId = orderItem.orderId 
-        INNER JOIN users ON orders.userID = users.userId 
-        WHERE users.email =:email 
-        AND orders.orderId = 
-        (SELECT orderId FROM orders ORDER BY orderDate DESC LIMIT 1)";
+        $sql_orderItems = "SELECT `orderItemId`, `quantity`
+            FROM orderItem
+            WHERE orderItem.orderId= 
+            (
+            SELECT `orderId`
+            FROM orders
+            INNER JOIN (users)
+            ON (users.userId=orders.userId)
+            WHERE email=:email
+            ORDER BY orderDate DESC LIMIT 1
+            )";
 
-        $sql_orderFixins = "SELECT name, price, heatRating FROM orders 
+        $sql_orderFixins = "SELECT name, price, heatRating, fixinId FROM orders 
         INNER JOIN orderItem ON orders.orderId = orderItem.orderId 
         INNER JOIN orderItemDetails 
         ON orderItem.orderItemId = orderItemDetails.orderItemId 
         INNER JOIN fixins ON orderItemDetails.tacoFixinId = fixins.fixinId 
-        LEFT JOIN sauces ON fixins.fixinId = sauces.sauceId INNER JOIN users 
-        ON orders.userID = users.userId 
-        WHERE email=:email AND orderItem.orderItemId =:orderItem 
-        AND orders.orderId = (SELECT orderId FROM orders ORDER BY orderDate 
-        DESC LIMIT 1)";
+        LEFT JOIN sauces ON fixins.fixinId = sauces.sauceId
+        WHERE orderItemDetails.orderItemId=:orderItemId";
 	
     	$order = array();
 
@@ -215,8 +217,7 @@ function getPreviousOrder()
     		foreach($orderItems as $key => $value) {
     			
     			$stmt = $db->prepare($sql_orderFixins);
-    			$stmt->bindParam("email", $email);
-    			$stmt->bindParam("orderItem", $value[$s]);
+    			$stmt->bindParam("orderItemId", $value[$s]);
     			$stmt->execute();
     			$fixins = $stmt->fetchAll(PDO::FETCH_ASSOC);
     			array_push($fixins, array($q => $value[$q]));

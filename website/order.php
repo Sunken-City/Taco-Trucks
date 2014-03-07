@@ -76,6 +76,7 @@ require_once('../lib/session.php');
 getSession();
 if(validateSession('userId'))
 {
+
 ?>   
     <div id="openLastOrderModal" class="modalDialog">
       <div>
