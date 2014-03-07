@@ -16,6 +16,8 @@ $app->get('/logout', 'destroySession');
 $app->get('/locations', 'getLocations');
 $app->post('/users', 'createUser');
 $app->get('/orders', 'getPreviousOrder');
+$app->post('/cart', 'updateCart');
+$app->get('/cart', 'getCart');
 $app->get('/users','getUserInfo');
 $app->get('/', function() use ($app)
 {
@@ -23,6 +25,43 @@ $app->get('/', function() use ($app)
 });
 
 $app->run();
+
+function getCart()
+{
+    getSession();
+    $app = \Slim\Slim::getInstance();
+
+    try
+    {
+        if(isset($_SESSION['cart']))
+        {
+            echo $_SESSION['cart'];
+        }
+        else
+            echo json_encode("{'errors': true}");
+
+    }
+    catch(Exception $e)
+    {
+        echo json_encode("{'errors': true}");
+    }
+}
+
+function updateCart()
+{
+    getSession();
+    $app = \Slim\Slim::getInstance();
+    try
+    {
+        $body = $app->request->getBody();
+        $_SESSION['cart'] = $body;
+        echo json_encode("{'success': true}");
+    }
+    catch(Exception $e)
+    {
+        $app->halt(404);
+    }
+}
 
 function getUserInfo()
 {
@@ -284,10 +323,12 @@ function createUser()
                 ':cc_n' => $user->cc_n
             );
             $stmt->execute($params);
+            $row = fetch(PDO::FETCH_ASSOC);
             $response['success'] = true;
             $response['message'] = "User created";
             newSession(sha1(SALT.$user->email));
             $_SESSION['email'] = $user->email;
+            $_SESSION['userId'] = $row['userId'];
         }
         else
         {

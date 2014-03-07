@@ -5,7 +5,7 @@
 
   window.addEventListener('load', function (event) {
 
-    var url = "/api/menu"; //"../taco_truck_menu.json"
+    var url = "../taco_truck_menu.json"; //"../taco_truck_menu.json"
     var request = new XMLHttpRequest();
 
     request.open("GET", url, false);
@@ -102,7 +102,20 @@
     });
 
     $("#checkout").click(function () {
-      window.location.replace("checkout.php");
+      $.ajax({
+	type: 'POST',
+	contentType: 'application/json',
+	url: '/api/cart',
+	dataType: "json",
+	data: JSON.stringify(cart.items),
+	success: function(data) {
+	  window.location.replace("checkout.php");
+	},
+	error: function(data) {
+	  alert('Start Crying');
+	}
+      });
+      
     });
 
     $("#addToCart").click(function () {
