@@ -5,12 +5,15 @@
 var geocoder;
 var map;
 var cartson;
+var cart;
+var cartdone;
 
 var address = [];
 var locationNames = [];
 var locationCounter = 0;
 window.addEventListener('load',
     function(event) {
+      var cart = new Cart();
         var url = "../api/locations";
         var request = new XMLHttpRequest();
         request.open("GET", url, false);
@@ -312,35 +315,39 @@ function Cart() {
     this.add = function(taco) {
         var cartTaco = ShallowCopy(taco);
         cartTaco.location = ".cartTaco";
+	cartTaco.fixins = [];
         this.items.push(cartTaco);
         this.print(cartTaco, this.items.length - 1);
     };
 
     this.print = function(taco, tacoId) {
         var tacoItem = $("<ul class=\"cartTaco\"></ul>");
-        for (var i = 0; i < taco.components.length; i++) {
-            if (taco[taco.components[i]] !== undefined) {
-                var name = taco[taco.components[i]].name;
-                if ((name !== undefined) && (name !== "None") && (name !== "No Sauce")) {
-                    var fixing = $("<li>" + name + "</li>");
-                    tacoItem.append(fixing);
-                }
-            }
-        }
-        for (var i = 0; i < taco["veggie"].length; i++) {
-            var name = taco["veggie"][i].name;
-            if ((name !== undefined) && (name !== "None")) {
-                var fixing = $("<li>" + name + "</li>");
-                tacoItem.append(fixing);
-            }
-        }
-        for (var i = 0; i < taco["extras"].length; i++) {
-            var name = taco["extras"][i].name;
-            if ((name !== undefined) && (name !== "None")) {
-                var fixing = $("<li>" + name + "</li>");
-                tacoItem.append(fixing);
-            }
-        }
+	for (var i = 0; i < taco.components.length; i++) {
+	  if (taco[taco.components[i]] !== undefined) {
+	    var name = taco[taco.components[i]].name;
+	    if ((name !== undefined) && (name !== "None") && (name !== "No Sauce")) {
+	      var fixing = $("<li>" + name + "</li>");
+	      taco.fixins.push(taco[taco.components[i]].fixinId);
+	      tacoItem.append(fixing);
+	    }
+	  }
+	}
+	for (var i = 0; i < taco["veggie"].length; i++) {
+	  var name = taco["veggie"][i].name;
+	  if ((name !== undefined) && (name !== "None")) {
+	    var fixing = $("<li>" + name + "</li>");
+	    taco.fixins.push(taco["veggie"][i].fixinId);
+	    tacoItem.append(fixing);
+	  }
+	}
+	for (var i = 0; i < taco["extras"].length; i++) {
+	  var name = taco["extras"][i].name;
+	  if ((name !== undefined) && (name !== "None")) {
+	    var fixing = $("<li>" + name + "</li>");
+	    taco.fixins.push(taco["extras"][i].fixinId);
+	    tacoItem.append(fixing);
+	  }
+	}
 
         var quantityField = $("<label for=\"quantity\">Quantity:</label><input name=\"quantity\" class=\"quantity\" tacolink=\"" + tacoId + "\" value=\"" + cart.items[tacoId].quantity + "\"/>");
         quantityField.spinner({
@@ -378,14 +385,13 @@ function Cart() {
     this.purchase = function() {
         var jsonable = [];
         for (var i = 0; i < this.items.length; i++) {
-
+	  var dbTaco = new Object();
+	  dbTaco.fixins = this.items[i].fixins;
+	  dbTaco.quantity = this.items[i].quantity;
+	  jsonable.push(dbTaco);
         }
+        cartdone = JSON.stringify(jsonable);
     }
-};
-
-function dbTaco() {
-    this.fixing = [];
-    this.quantity = 0;
 };
 //From http://stackoverflow.com/questions/7574054/javascript-how-to-pass-object-by-value
 function ShallowCopy(o) {
